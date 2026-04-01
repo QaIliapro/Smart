@@ -24,7 +24,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Image */}
-        <div className={`rounded-3xl h-[500px] bg-gradient-to-br ${product.gradient} sticky top-24`} />
+        <div className={`rounded-3xl h-64 sm:h-[500px] bg-gradient-to-br ${product.gradient} sticky top-24`} />
 
         {/* Details */}
         <div className="flex flex-col gap-6">
@@ -33,8 +33,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
               {product.tag}
             </span>
           </div>
-          <h1 className="text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>{product.name}</h1>
-          <p className="text-3xl font-semibold" style={{ color: 'var(--text-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
+          <h1 className="text-2xl sm:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>{product.name}</h1>
+          <p className="text-2xl sm:text-3xl font-semibold" style={{ color: 'var(--text-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
 
           {/* Stock */}
           <div>
