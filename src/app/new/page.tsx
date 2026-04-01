@@ -1,0 +1,113 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import AddToCartButton from '@/components/AddToCartButton'
+
+interface Product {
+  id: string
+  slug: string
+  name: string
+  price: number
+  category: string
+  tag: string
+  specs: string
+  gradient: string
+  stock: number
+}
+
+function StockBadge({ stock }: { stock: number }) {
+  if (stock === 0) {
+    return <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: '#ff3b3020', color: '#ff3b30' }}>Нет в наличии</span>
+  }
+  if (stock <= 3) {
+    return <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: '#ff9f0a20', color: '#ff9f0a' }}>Осталось {stock} шт</span>
+  }
+  return <span className="text-xs font-medium px-2 py-0.5 rounded-full" style={{ background: '#34c75920', color: '#34c759' }}>В наличии</span>
+}
+
+export default function NewPage() {
+  const [filter, setFilter] = useState<'All' | 'iPhone' | 'Mac'>('All')
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/new-products')
+      .then(r => r.json())
+      .then(data => { setProducts(data); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const filtered = filter === 'All' ? products : products.filter(p => p.category === filter)
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
+      <div className="text-center mb-16">
+        <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--accent)' }}>Каталог</p>
+        <h1 className="section-title mb-4">Новые устройства</h1>
+        <p className="section-subtitle">Последние новинки Apple с официальной гарантией</p>
+      </div>
+
+      {/* Filter Tabs */}
+      <div className="flex gap-2 justify-center mb-12">
+        {(['All', 'iPhone', 'Mac'] as const).map(tab => (
+          <button key={tab} onClick={() => setFilter(tab)}
+            className="px-6 py-2.5 rounded-full text-sm font-medium transition-all"
+            style={{
+              background: filter === tab ? 'var(--accent)' : 'var(--bg-secondary)',
+              color: filter === tab ? 'white' : 'var(--text-secondary)',
+              border: `1px solid ${filter === tab ? 'var(--accent)' : 'var(--border-color)'}`,
+            }}
+          >
+            {tab === 'All' ? 'Все' : tab}
+          </button>
+        ))}
+      </div>
+
+      {loading ? (
+        <div className="text-center py-24" style={{ color: 'var(--text-secondary)' }}>Загрузка...</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map(product => {
+            let specs: string[] = []
+            try { specs = JSON.parse(product.specs) } catch {}
+            return (
+              <div key={product.id} className="card overflow-hidden flex flex-col">
+                {/* Image Placeholder */}
+                <div className={`h-56 bg-gradient-to-br ${product.gradient} relative`}>
+                  <span className="absolute top-4 left-4 text-white text-xs font-semibold px-3 py-1 rounded-full"
+                    style={{ background: 'rgba(0,0,0,0.3)' }}>
+                    {product.tag}
+                  </span>
+                </div>
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>{product.name}</h3>
+                    <StockBadge stock={product.stock} />
+                  </div>
+                  <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
+                    {specs.slice(0, 3).join(' · ')}
+                  </p>
+                  <p className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+                    {product.price.toLocaleString('ru-RU')} ₽
+                  </p>
+                  <div className="mt-auto flex gap-3">
+                    {product.stock > 0 ? (
+                      <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} />
+                    ) : (
+                      <button disabled className="btn-primary flex-1 text-sm opacity-40 cursor-not-allowed">Нет в наличии</button>
+                    )}
+                    <Link href={`/product/${product.slug}`} className="btn-secondary flex-1 text-sm text-center">
+                      Подробнее
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}

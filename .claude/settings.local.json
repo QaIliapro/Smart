@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx:*)",
+      "Read(//Users/mac/**)",
+      "Read(//usr/bin/**)",
+      "Bash(echo \"PATH: $PATH\")",
+      "Bash(source ~/.zshrc)",
+      "Bash(command -v node)",
+      "Bash(brew list:*)",
+      "Bash(curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh)",
+      "Bash(bash)",
+      "Bash(/usr/local/bin/npx prisma:*)",
+      "Bash(~/.nvm/versions/node/v20.20.2/bin/npx --version)",
+      "Bash(~/.nvm/versions/node/v20.20.2/bin/node --version)",
+      "Bash(~/.nvm/versions/node/v20.20.2/bin/npx prisma:*)",
+      "Bash(export PATH=\"$HOME/.nvm/versions/node/v20.20.2/bin:$PATH\")",
+      "Bash(npm run:*)",
+      "Bash(find /Users/mac/Projects/smart/src -type f \\\\\\(-name *.tsx -o -name *.ts -o -name *.prisma \\\\\\))",
+      "Bash(find /Users/mac/Projects/smart -name schema.prisma -o -name *.prisma)"
+    ]
+  }
+}

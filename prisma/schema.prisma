@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model UsedProduct {
+  id          String   @id @default(cuid())
+  name        String
+  price       Float
+  condition   String
+  description String
+  specs       String
+  imageUrl    String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Order {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  method    String
+  address   String?
+  comment   String?
+  items     String
+  total     Float
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model NewProduct {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  price       Float
+  category    String
+  tag         String
+  specs       String
+  description String
+  colors      String
+  gradient    String
+  stock       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RepairRequest {
+  id        String   @id @default(cuid())
+  device    String
+  problem   String
+  name      String
+  phone     String
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
