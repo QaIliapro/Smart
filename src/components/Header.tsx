@@ -12,9 +12,9 @@ export default function Header() {
 
   const navLinks = [
     { href: '/', label: 'Главная' },
-    { href: '/new', label: 'Новое' },
-    { href: '/used', label: 'Б/У' },
     { href: '/service', label: 'Сервис' },
+    { href: '/trade-in', label: 'Trade-in' },
+    { href: '/new', label: 'Новое' },
     { href: '/contact', label: 'Контакты' },
   ]
 

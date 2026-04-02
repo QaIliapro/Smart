@@ -20,7 +20,7 @@ interface Props {
 export default function UsedProductCard({ product, gradient, conditionColor }: Props) {
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_PHONE
   const telegram = process.env.NEXT_PUBLIC_TELEGRAM_USERNAME
-  const message = encodeURIComponent(`Здравствуйте! Интересует ${product.name} (Б/У) за ${product.price} ₽`)
+  const message = encodeURIComponent(`Здравствуйте! Интересует ${product.name} (Trade-in) за ${product.price} ₽`)
 
   let specs: string[] = []
   try {

@@ -43,9 +43,9 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
         <Link href="/admin/products" className="card p-8 flex items-center gap-4 no-underline">
           <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
-            style={{ background: 'linear-gradient(135deg, #5e5ce6, #bf5af2)' }}>Б</div>
+            style={{ background: 'linear-gradient(135deg, #5e5ce6, #bf5af2)' }}>T</div>
           <div>
-            <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>Управление б/у товарами</p>
+            <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>Управление Trade-in товарами</p>
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{usedProducts.length} товаров</p>
           </div>
         </Link>

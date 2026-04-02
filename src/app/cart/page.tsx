@@ -21,7 +21,7 @@ export default function CartPage() {
         <p style={{ color: 'var(--text-secondary)' }} className="mb-8">Добавьте товары из каталога</p>
         <div className="flex gap-4 justify-center">
           <Link href="/new" className="btn-primary">Новые устройства</Link>
-          <Link href="/used" className="btn-secondary">Б/У техника</Link>
+          <Link href="/trade-in" className="btn-secondary">Trade-in</Link>
         </div>
       </div>
     )

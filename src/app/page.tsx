@@ -21,14 +21,14 @@ export default function HomePage() {
             Smart — техника,<br />которой доверяют
           </h1>
           <p className="section-subtitle mb-12 max-w-2xl mx-auto">
-            Новые Apple устройства и б/у техника с гарантией качества. Лучшие цены, быстрая доставка.
+            Новые Apple устройства и Trade-in с гарантией качества. Лучшие цены, быстрая доставка.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/new" className="btn-primary text-base px-8 py-4">
               Смотреть каталог
             </Link>
-            <Link href="/used" className="btn-secondary text-base px-8 py-4">
-              Б/У техника
+            <Link href="/trade-in" className="btn-secondary text-base px-8 py-4">
+              Trade-in
             </Link>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function HomePage() {
       {/* Categories */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
         <h2 className="section-title text-center mb-4">Выберите категорию</h2>
-        <p className="section-subtitle text-center mb-16">Новые устройства напрямую и проверенная б/у техника</p>
+        <p className="section-subtitle text-center mb-16">Новые устройства и проверенная техника Trade-in</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Link href="/new" className="card group p-10 flex flex-col items-start gap-6 no-underline" style={{ minHeight: '280px' }}>
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold"
@@ -51,12 +51,12 @@ export default function HomePage() {
               Смотреть →
             </span>
           </Link>
-          <Link href="/used" className="card group p-10 flex flex-col items-start gap-6 no-underline" style={{ minHeight: '280px' }}>
+          <Link href="/trade-in" className="card group p-10 flex flex-col items-start gap-6 no-underline" style={{ minHeight: '280px' }}>
             <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-2xl font-bold"
               style={{ background: 'linear-gradient(135deg, #5e5ce6, #bf5af2)' }}
-            >Б</div>
+            >T</div>
             <div>
-              <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Б/У техника</h3>
+              <h3 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Trade-in</h3>
               <p style={{ color: 'var(--text-secondary)' }}>Проверенные устройства в отличном состоянии с гарантией</p>
             </div>
             <span className="mt-auto text-sm font-medium" style={{ color: 'var(--accent)' }}>
@@ -95,7 +95,7 @@ export default function HomePage() {
           <p className="section-subtitle text-center mb-16">Мы заботимся о каждом покупателе</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '🛡️', title: 'Гарантия качества', desc: 'Каждое б/у устройство проходит 50-точечную проверку перед продажей' },
+              { icon: '🛡️', title: 'Гарантия качества', desc: 'Каждое Trade-in устройство проходит 50-точечную проверку перед продажей' },
               { icon: '✅', title: 'Оригинальные товары', desc: 'Только официальные устройства Apple. Никаких подделок' },
               { icon: '🚀', title: 'Быстрая доставка', desc: 'Доставка в течение 1-2 дней по всей стране' },
               { icon: '💬', title: 'Поддержка 24/7', desc: 'Всегда на связи в WhatsApp и Telegram' },

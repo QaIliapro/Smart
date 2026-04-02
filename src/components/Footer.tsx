@@ -11,13 +11,13 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Smart</h3>
             <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-              Магазин новой и б/у техники Apple. Гарантия качества, проверенные устройства.
+              Магазин техники Apple. Сервис, Trade-in и новые устройства.
             </p>
           </div>
           <div>
             <h4 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Навигация</h4>
             <div className="flex flex-col gap-2">
-              {[['/', 'Главная'], ['/new', 'Новые устройства'], ['/used', 'Б/У техника'], ['/cart', 'Корзина'], ['/contact', 'Контакты']].map(([href, label]) => (
+              {[['/', 'Главная'], ['/service', 'Сервис'], ['/trade-in', 'Trade-in'], ['/new', 'Новые устройства'], ['/contact', 'Контакты']].map(([href, label]) => (
                 <Link key={href} href={href} className="text-sm hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secondary)' }}>
                   {label}
                 </Link>

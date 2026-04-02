@@ -3,7 +3,7 @@ import UsedProductCard from '@/components/UsedProductCard'
 
 export const revalidate = 60
 
-export default async function UsedPage() {
+export default async function TradeInPage() {
   const products = await prisma.usedProduct.findMany({
     where: { active: true },
     orderBy: { createdAt: 'desc' },
@@ -26,7 +26,7 @@ export default async function UsedPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="text-center mb-16">
-        <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--accent)' }}>Б/У Техника</p>
+        <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--accent)' }}>Trade-in</p>
         <h1 className="section-title mb-4">Проверенные устройства</h1>
         <p className="section-subtitle">Каждое устройство прошло проверку и продается с гарантией</p>
       </div>

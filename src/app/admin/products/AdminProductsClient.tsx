@@ -80,7 +80,7 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">
           <Link href="/admin/dashboard" className="text-sm" style={{ color: 'var(--accent)' }}>← Назад</Link>
-          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Б/У товары</h1>
+          <h1 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>Trade-in товары</h1>
         </div>
         <button onClick={() => { setShowForm(!showForm); setEditId(null); setForm(emptyForm) }}
           className="btn-primary text-sm px-6 py-2.5">

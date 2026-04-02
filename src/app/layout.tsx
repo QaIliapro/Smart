@@ -7,7 +7,7 @@ import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Smart — Магазин техники Apple',
-  description: 'Новые и б/у устройства Apple: iPhone, MacBook. Гарантия качества.',
+  description: 'Новые устройства Apple и Trade-in: iPhone, MacBook. Гарантия качества.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
