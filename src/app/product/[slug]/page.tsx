@@ -14,9 +14,8 @@ export default async function ProductPage({ params }: { params: { slug: string }
   try { specs = JSON.parse(product.specs) } catch {}
   try { colors = JSON.parse(product.colors) } catch {}
 
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_PHONE
-  const telegram = process.env.NEXT_PUBLIC_TELEGRAM_USERNAME
-  const message = encodeURIComponent(`Здравствуйте! Интересует ${product.name} за ${product.price.toLocaleString('ru-RU')} ₽`)
+  const vk = process.env.NEXT_PUBLIC_VK_URL
+  const max = process.env.NEXT_PUBLIC_MAX_URL
 
   const outOfStock = product.stock === 0
 
@@ -29,21 +28,21 @@ export default async function ProductPage({ params }: { params: { slug: string }
         {/* Details */}
         <div className="flex flex-col gap-6">
           <div>
-            <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{ background: 'var(--accent)', color: 'white' }}>
+            <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{ background: 'var(--color-primary)', color: 'white' }}>
               {product.tag}
             </span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>{product.name}</h1>
-          <p className="text-2xl sm:text-3xl font-semibold" style={{ color: 'var(--text-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
+          <h1 className="text-2xl sm:text-4xl font-bold" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h1>
+          <p className="text-2xl sm:text-3xl font-semibold" style={{ color: 'var(--color-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
 
           {/* Stock */}
           <div>
             {outOfStock ? (
               <span className="text-sm font-medium px-3 py-1 rounded-full" style={{ background: '#ff3b3020', color: '#ff3b30' }}>Нет в наличии</span>
             ) : product.stock <= 3 ? (
-              <span className="text-sm font-medium px-3 py-1 rounded-full" style={{ background: '#ff9f0a20', color: '#ff9f0a' }}>Осталось {product.stock} шт</span>
+              <span className="text-sm font-medium px-3 py-1 rounded-full" style={{ background: 'rgba(212,136,15,0.15)', color: 'var(--color-warning)' }}>Осталось {product.stock} шт</span>
             ) : (
-              <span className="text-sm font-medium px-3 py-1 rounded-full" style={{ background: '#34c75920', color: '#34c759' }}>В наличии</span>
+              <span className="text-sm font-medium px-3 py-1 rounded-full" style={{ background: 'rgba(27,140,61,0.15)', color: 'var(--color-success)' }}>В наличии</span>
             )}
           </div>
 
@@ -51,20 +50,20 @@ export default async function ProductPage({ params }: { params: { slug: string }
           <ProductColorPicker colors={colors} />
 
           {/* Specs */}
-          <div className="p-6 rounded-2xl" style={{ background: 'var(--bg-secondary)' }}>
-            <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Характеристики</h3>
+          <div className="p-6 rounded-2xl" style={{ background: 'var(--color-bg-section)' }}>
+            <h3 className="font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Характеристики</h3>
             <div className="flex flex-col gap-2">
               {specs.map(spec => (
                 <div key={spec} className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--accent)' }} />
-                  <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>{spec}</span>
+                  <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--color-primary)' }} />
+                  <span className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>{spec}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Description */}
-          <p style={{ color: 'var(--text-secondary)' }} className="leading-relaxed">{product.description}</p>
+          <p style={{ color: 'var(--color-text-secondary)' }} className="leading-relaxed">{product.description}</p>
 
           {/* CTA */}
           <div className="flex flex-col gap-3">
@@ -74,20 +73,20 @@ export default async function ProductPage({ params }: { params: { slug: string }
               <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} fullWidth />
             )}
             <div className="grid grid-cols-2 gap-3">
-              {whatsapp && (
-                <a href={`https://wa.me/${whatsapp}?text=${message}`} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-full text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  style={{ background: '#25D366' }}
+              {vk && (
+                <a href={vk} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-medium text-white transition-all hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #0077FF, #0057CC)', boxShadow: '0 4px 15px rgba(0,119,255,0.3)' }}
                 >
-                  <span>WhatsApp</span>
+                  <span>ВКонтакте</span>
                 </a>
               )}
-              {telegram && (
-                <a href={`https://t.me/${telegram}`} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-full text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  style={{ background: '#229ED9' }}
+              {max && (
+                <a href={max} target="_blank" rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-medium text-white transition-all hover:scale-105"
+                  style={{ background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)', boxShadow: '0 4px 15px rgba(84,114,255,0.3)' }}
                 >
-                  <span>Telegram</span>
+                  <span>MAX</span>
                 </a>
               )}
             </div>
@@ -98,7 +97,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
       {/* Mobile sticky bar */}
       {!outOfStock && (
         <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 z-30"
-          style={{ background: 'var(--bg-primary)', borderTop: '1px solid var(--border-color)' }}
+          style={{ background: 'var(--color-bg-page)', borderTop: '1px solid var(--color-border)' }}
         >
           <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} fullWidth />
         </div>

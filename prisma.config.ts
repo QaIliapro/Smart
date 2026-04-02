@@ -1,7 +1,5 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
-import { createClient } from "@libsql/client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -11,12 +9,5 @@ export default defineConfig({
   },
   datasource: {
     url: process.env.DATABASE_URL!,
-    adapter: () => {
-      const client = createClient({
-        url: process.env.DATABASE_URL!,
-        authToken: process.env.TURSO_AUTH_TOKEN,
-      });
-      return new PrismaLibSql(client);
-    },
   },
 });

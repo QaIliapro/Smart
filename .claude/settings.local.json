@@ -17,7 +17,24 @@
       "Bash(export PATH=\"$HOME/.nvm/versions/node/v20.20.2/bin:$PATH\")",
       "Bash(npm run:*)",
       "Bash(find /Users/mac/Projects/smart/src -type f \\\\\\(-name *.tsx -o -name *.ts -o -name *.prisma \\\\\\))",
-      "Bash(find /Users/mac/Projects/smart -name schema.prisma -o -name *.prisma)"
+      "Bash(find /Users/mac/Projects/smart -name schema.prisma -o -name *.prisma)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(brew install:*)",
+      "Bash(turso db:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000)",
+      "WebSearch",
+      "WebFetch(domain:vk.company)",
+      "WebFetch(domain:vkteam.medium.com)",
+      "WebFetch(domain:www.brandcolorcode.com)",
+      "WebFetch(domain:www.schemecolor.com)",
+      "WebFetch(domain:dev.max.ru)",
+      "WebFetch(domain:vkcom.github.io)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:brandcolors.net)",
+      "WebFetch(domain:vkui.io)",
+      "Bash(pkill -f \"next dev\")"
     ]
   }
 }

@@ -43,7 +43,7 @@ export default function NewPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="text-center mb-16">
-        <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--accent)' }}>Каталог</p>
+        <p className="text-sm font-semibold uppercase tracking-widest mb-4" style={{ color: 'var(--color-primary)' }}>Каталог</p>
         <h1 className="section-title mb-4">Новые устройства</h1>
         <p className="section-subtitle">Последние новинки Apple с официальной гарантией</p>
       </div>
@@ -54,9 +54,9 @@ export default function NewPage() {
           <button key={tab} onClick={() => setFilter(tab)}
             className="px-6 py-2.5 rounded-full text-sm font-medium transition-all"
             style={{
-              background: filter === tab ? 'var(--accent)' : 'var(--bg-secondary)',
-              color: filter === tab ? 'white' : 'var(--text-secondary)',
-              border: `1px solid ${filter === tab ? 'var(--accent)' : 'var(--border-color)'}`,
+              background: filter === tab ? 'var(--color-primary)' : 'var(--color-bg-section)',
+              color: filter === tab ? 'white' : 'var(--color-text-secondary)',
+              border: `1px solid ${filter === tab ? 'var(--color-primary)' : 'var(--color-border)'}`,
             }}
           >
             {tab === 'All' ? 'Все' : tab}
@@ -65,7 +65,7 @@ export default function NewPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-24" style={{ color: 'var(--text-secondary)' }}>Загрузка...</div>
+        <div className="text-center py-24" style={{ color: 'var(--color-text-secondary)' }}>Загрузка...</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map(product => {
@@ -83,13 +83,13 @@ export default function NewPage() {
                 {/* Content */}
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-lg" style={{ color: 'var(--text-primary)' }}>{product.name}</h3>
+                    <h3 className="font-semibold text-lg" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
                     <StockBadge stock={product.stock} />
                   </div>
-                  <p className="text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm mb-3" style={{ color: 'var(--color-text-secondary)' }}>
                     {specs.slice(0, 3).join(' · ')}
                   </p>
-                  <p className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+                  <p className="text-2xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>
                     {product.price.toLocaleString('ru-RU')} ₽
                   </p>
                   <div className="mt-auto flex gap-3">

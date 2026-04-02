@@ -28,21 +28,21 @@ export default function ServicePage() {
   return (
     <div>
       {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: 'var(--bg-primary)', minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
+      <section className="relative overflow-hidden" style={{ background: 'var(--color-bg-page)', minHeight: '60vh', display: 'flex', alignItems: 'center' }}>
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-15"
-            style={{ background: 'radial-gradient(circle, #bf5af2 0%, transparent 70%)', transform: 'translate(30%, -30%)' }}
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-10"
+            style={{ background: 'radial-gradient(circle, #D73711 0%, transparent 70%)', transform: 'translate(30%, -30%)' }}
           />
-          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, #0071e3 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }}
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-5"
+            style={{ background: 'radial-gradient(circle, #D73711 0%, transparent 70%)', transform: 'translate(-30%, 30%)' }}
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-24 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: 'var(--accent)' }}>
+          <p className="text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: 'var(--color-primary)' }}>
             Профессиональный ремонт Apple
           </p>
           <h1 className="section-title mb-8 max-w-4xl mx-auto">
-            Сервисный центр Smart
+            Сервисный центр :smart
           </h1>
           <p className="section-subtitle mb-12 max-w-2xl mx-auto">
             Ремонт iPhone, MacBook и iPad с гарантией. Оригинальные запчасти. Диагностика — бесплатно.
@@ -54,31 +54,31 @@ export default function ServicePage() {
       </section>
 
       {/* Why Us */}
-      <section style={{ background: 'var(--bg-secondary)' }} className="py-24">
+      <section style={{ background: 'var(--color-bg-section)' }} className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="section-title text-center mb-4">Почему мы?</h2>
           <p className="section-subtitle text-center mb-16">Сервис, которому доверяют</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="card p-8 text-center">
               <div className="text-5xl mb-6">🏪</div>
-              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>Большой склад запчастей</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>
+              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--color-text-primary)' }}>Большой склад запчастей</h3>
+              <p style={{ color: 'var(--color-text-secondary)' }}>
                 Держим в наличии тысячи оригинальных запчастей для всех моделей iPhone, MacBook и iPad.
                 Большинство ремонтов выполняем в день обращения.
               </p>
             </div>
             <div className="card p-8 text-center">
               <div className="text-5xl mb-6">⚙️</div>
-              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>Профессиональное оборудование</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>
+              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--color-text-primary)' }}>Профессиональное оборудование</h3>
+              <p style={{ color: 'var(--color-text-secondary)' }}>
                 Используем редкое профессиональное оборудование для микросхемного ремонта, пайки и диагностики.
                 То, что другие сервисы не берутся починить — мы чиним.
               </p>
             </div>
             <div className="card p-8 text-center">
               <div className="text-5xl mb-6">👨‍🔧</div>
-              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>Опытные мастера</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>
+              <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--color-text-primary)' }}>Опытные мастера</h3>
+              <p style={{ color: 'var(--color-text-secondary)' }}>
                 Наши специалисты имеют более 5 лет опыта работы с техникой Apple.
                 Сертифицированы и постоянно проходят обучение.
               </p>
@@ -91,16 +91,16 @@ export default function ServicePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="relative rounded-3xl overflow-hidden h-64"
-            style={{ background: 'linear-gradient(135deg, #0071e3, #2997ff, #5e5ce6)' }}
+            style={{ background: 'linear-gradient(135deg, #D73711, #E8512F, #C02E0E)' }}
           >
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-8">
               <div className="text-5xl mb-4">🛠️</div>
-              <h3 className="text-2xl font-bold mb-2">Мастерская Smart</h3>
+              <h3 className="text-2xl font-bold mb-2">Мастерская :smart</h3>
               <p className="text-white/80">Современное оборудование для точного и качественного ремонта</p>
             </div>
           </div>
           <div className="relative rounded-3xl overflow-hidden h-64"
-            style={{ background: 'linear-gradient(135deg, #bf5af2, #ff375f, #ff9f0a)' }}
+            style={{ background: 'linear-gradient(135deg, #C02E0E, #D73711, #E8512F)' }}
           >
             <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-8">
               <div className="text-5xl mb-4">✅</div>
@@ -112,7 +112,7 @@ export default function ServicePage() {
       </section>
 
       {/* Services List */}
-      <section style={{ background: 'var(--bg-secondary)' }} className="py-24">
+      <section style={{ background: 'var(--color-bg-section)' }} className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <h2 className="section-title text-center mb-4">Виды ремонта</h2>
           <p className="section-subtitle text-center mb-16">Работаем со всеми моделями Apple</p>
@@ -120,7 +120,7 @@ export default function ServicePage() {
             {repairServices.map((service, i) => (
               <div key={i} className="card p-6 flex items-center gap-4">
                 <span className="text-3xl">{service.icon}</span>
-                <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{service.title}</span>
+                <span className="font-medium" style={{ color: 'var(--color-text-primary)' }}>{service.title}</span>
               </div>
             ))}
           </div>
@@ -134,8 +134,8 @@ export default function ServicePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {prices.map((item, i) => (
             <div key={i} className="card p-6 flex flex-col gap-2">
-              <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{item.service}</p>
-              <p className="text-2xl font-bold" style={{ color: 'var(--accent)' }}>
+              <p className="font-semibold text-sm" style={{ color: 'var(--color-text-primary)' }}>{item.service}</p>
+              <p className="text-2xl font-bold" style={{ color: item.free ? 'var(--color-success)' : 'var(--color-primary)' }}>
                 {item.free ? 'Бесплатно' : `от ${item.from?.toLocaleString('ru-RU')} ₽`}
               </p>
             </div>
@@ -144,7 +144,7 @@ export default function ServicePage() {
       </section>
 
       {/* Repair Form */}
-      <section id="repair-form" style={{ background: 'var(--bg-secondary)' }} className="py-24">
+      <section id="repair-form" style={{ background: 'var(--color-bg-section)' }} className="py-24">
         <div className="max-w-2xl mx-auto px-4 sm:px-6">
           <h2 className="section-title text-center mb-4">Оставить заявку</h2>
           <p className="section-subtitle text-center mb-12">Заполните форму и мы свяжемся с вами</p>

@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>Smart Admin</h1>
+          <h1 className="text-3xl font-bold"><span style={{ color: '#e02020' }}>:smart</span> admin</h1>
           <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>Панель управления</p>
         </div>
         <div className="card p-8">

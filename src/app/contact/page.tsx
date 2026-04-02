@@ -7,8 +7,8 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP_PHONE
-  const telegram = process.env.NEXT_PUBLIC_TELEGRAM_USERNAME
+  const vk = process.env.NEXT_PUBLIC_VK_URL
+  const max = process.env.NEXT_PUBLIC_MAX_URL
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,7 +36,7 @@ export default function ContactPage() {
         {/* Info */}
         <div className="flex flex-col gap-6">
           <div className="card p-8">
-            <h2 className="font-semibold text-xl mb-6" style={{ color: 'var(--text-primary)' }}>Магазин Smart</h2>
+            <h2 className="font-semibold text-xl mb-6" style={{ color: 'var(--text-primary)' }}>Магазин :smart</h2>
             <div className="flex flex-col gap-4">
               {[
                 { icon: '📍', label: 'Адрес', value: 'ул. Примерная, 1, Москва' },
@@ -56,15 +56,21 @@ export default function ContactPage() {
           <div className="card p-8">
             <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Написать напрямую</h3>
             <div className="flex gap-3">
-              {whatsapp && (
-                <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer"
-                  className="flex-1 py-3 rounded-full text-center text-sm font-medium text-white"
-                  style={{ background: '#25D366' }}>WhatsApp</a>
+              {vk && (
+                <a href={vk} target="_blank" rel="noopener noreferrer"
+                  className="flex-1 py-3 rounded-full text-center text-sm font-medium text-white transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #0077FF, #0057CC)',
+                    boxShadow: '0 4px 15px rgba(0, 119, 255, 0.4)',
+                  }}>ВКонтакте</a>
               )}
-              {telegram && (
-                <a href={`https://t.me/${telegram}`} target="_blank" rel="noopener noreferrer"
-                  className="flex-1 py-3 rounded-full text-center text-sm font-medium text-white"
-                  style={{ background: '#229ED9' }}>Telegram</a>
+              {max && (
+                <a href={max} target="_blank" rel="noopener noreferrer"
+                  className="flex-1 py-3 rounded-full text-center text-sm font-medium text-white transition-all duration-200 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)',
+                    boxShadow: '0 4px 15px rgba(84, 114, 255, 0.4)',
+                  }}>MAX</a>
               )}
             </div>
           </div>

@@ -6,7 +6,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Smart — Магазин техники Apple',
+  title: ':smart — Магазин техники Apple',
   description: 'Новые устройства Apple и Trade-in: iPhone, MacBook. Гарантия качества.',
 }
 
