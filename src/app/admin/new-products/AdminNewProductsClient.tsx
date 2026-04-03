@@ -56,12 +56,21 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
-    const fd = new FormData()
-    fd.append('file', file)
-    const res = await fetch('/api/upload', { method: 'POST', body: fd })
-    const data = await res.json()
-    if (data.url) setForm(f => ({ ...f, imageUrl: data.url }))
-    setUploading(false)
+    try {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/upload', { method: 'POST', body: fd })
+      const data = await res.json()
+      if (data.url) {
+        setForm(f => ({ ...f, imageUrl: data.url }))
+      } else {
+        alert('Ошибка загрузки: ' + (data.error || 'неизвестная ошибка'))
+      }
+    } catch (err) {
+      alert('Ошибка: ' + String(err))
+    } finally {
+      setUploading(false)
+    }
   }
 
   const reload = async () => {
