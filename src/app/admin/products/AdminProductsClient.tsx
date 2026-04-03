@@ -36,7 +36,7 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
       if (data.url) {
         setForm(f => ({ ...f, imageUrl: data.url }))
       } else {
-        alert('Ошибка загрузки: ' + (data.error || 'неизвестная ошибка'))
+        alert('Ответ сервера: ' + JSON.stringify(data))
       }
     } catch (err) {
       alert('Ошибка: ' + String(err))
