@@ -52,19 +52,40 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
     setForm(f => ({ ...f, name, slug: f.slug && f.slug !== toSlug(f.name) ? f.slug : toSlug(name) }))
   }
 
+  const compressImage = (file: File): Promise<Blob> => {
+    return new Promise((resolve) => {
+      const img = new Image()
+      const url = URL.createObjectURL(file)
+      img.onload = () => {
+        const maxSize = 800
+        let { width, height } = img
+        if (width > height && width > maxSize) { height = height * maxSize / width; width = maxSize }
+        else if (height > maxSize) { width = width * maxSize / height; height = maxSize }
+        const canvas = document.createElement('canvas')
+        canvas.width = width
+        canvas.height = height
+        canvas.getContext('2d')!.drawImage(img, 0, 0, width, height)
+        URL.revokeObjectURL(url)
+        canvas.toBlob(blob => resolve(blob!), 'image/jpeg', 0.85)
+      }
+      img.src = url
+    })
+  }
+
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
     setUploading(true)
     try {
+      const compressed = await compressImage(file)
       const fd = new FormData()
-      fd.append('file', file)
+      fd.append('file', new File([compressed], file.name.replace(/\.[^.]+$/, '.jpg'), { type: 'image/jpeg' }))
       const res = await fetch('/api/upload', { method: 'POST', body: fd })
       const data = await res.json()
       if (data.url) {
         setForm(f => ({ ...f, imageUrl: data.url }))
       } else {
-        alert('Ошибка загрузки: ' + (data.error || 'неизвестная ошибка'))
+        alert('Ошибка: ' + JSON.stringify(data))
       }
     } catch (err) {
       alert('Ошибка: ' + String(err))
