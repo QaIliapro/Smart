@@ -200,7 +200,7 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
                   {uploading ? 'Загрузка...' : form.imageUrl ? '✅ Фото загружено' : '📷 Выбрать фото'}
                   <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleUpload} disabled={uploading} />
                 </label>
-                {form.imageUrl && (
+                {form.imageUrl?.startsWith('http') && (
                   <img src={form.imageUrl} alt="" className="w-12 h-12 rounded-xl object-cover" />
                 )}
               </div>
@@ -247,7 +247,7 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
         {products.map(p => (
           <div key={p.id} className="card p-6 flex items-center gap-6">
             {p.imageUrl
-              ? <img src={p.imageUrl} alt={p.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+              ? <img src={p.imageUrl!} alt={p.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" onError={e => { (e.target as HTMLImageElement).style.display = 'none' }} />
               : <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${p.gradient} flex-shrink-0`} />
             }
             <div className="flex-1 min-w-0">

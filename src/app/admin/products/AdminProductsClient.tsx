@@ -141,7 +141,7 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
                   {uploading ? 'Загрузка...' : form.imageUrl ? '✅ Фото загружено' : '📷 Выбрать фото'}
                   <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleUpload} disabled={uploading} />
                 </label>
-                {form.imageUrl && (
+                {form.imageUrl?.startsWith('http') && (
                   <img src={form.imageUrl} alt="" className="w-12 h-12 rounded-xl object-cover" />
                 )}
               </div>
