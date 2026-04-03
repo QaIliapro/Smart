@@ -34,7 +34,13 @@
       "WebFetch(domain:github.com)",
       "WebFetch(domain:brandcolors.net)",
       "WebFetch(domain:vkui.io)",
-      "Bash(pkill -f \"next dev\")"
+      "Bash(pkill -f \"next dev\")",
+      "Bash(git commit:*)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:3dicons.co)",
+      "Bash(ls:*)",
+      "Bash(curl:*)",
+      "Bash(vercel --version)"
     ]
   }
 }

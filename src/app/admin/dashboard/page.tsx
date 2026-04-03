@@ -73,6 +73,14 @@ export default async function AdminDashboard() {
             <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{newRepairs} новых заявок</p>
           </div>
         </Link>
+        <Link href="/admin/repair-services" className="card p-8 flex items-center gap-4 no-underline">
+          <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white font-bold text-xl"
+            style={{ background: 'linear-gradient(135deg, #D73711, #E8512F)' }}>В</div>
+          <div>
+            <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>Виды ремонта и цены</p>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Управление прайс-листом</p>
+          </div>
+        </Link>
       </div>
     </div>
   )
