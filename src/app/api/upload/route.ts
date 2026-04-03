@@ -13,7 +13,8 @@ export async function POST(req: NextRequest) {
     const file = formData.get('file') as File
     if (!file) return NextResponse.json({ error: 'No file' }, { status: 400 })
 
-    const blob = await put(`products/${Date.now()}-${file.name}`, file, { access: 'public' })
+    const token = process.env.BLOB_READ_WRITE_TOKEN || process.env.SMART_BLOB_READ_WRITE_TOKEN
+    const blob = await put(`products/${Date.now()}-${file.name}`, file, { access: 'public', token })
     return NextResponse.json({ url: blob.url })
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 })
