@@ -74,9 +74,9 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
   }
 
   const reload = async () => {
-    const res = await fetch('/api/admin/new-products')
+    const res = await fetch('/api/admin/new-products', { credentials: 'include' })
     const data = await res.json()
-    setProducts(data)
+    if (Array.isArray(data)) setProducts(data)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,6 +95,7 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
       method: editId ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
+      credentials: 'include',
     })
 
     setForm(emptyForm)
@@ -197,7 +198,7 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
                 <label className="flex-1 px-4 py-3 rounded-xl text-sm cursor-pointer text-center font-medium transition-opacity hover:opacity-80"
                   style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
                   {uploading ? 'Загрузка...' : form.imageUrl ? '✅ Фото загружено' : '📷 Выбрать фото'}
-                  <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
+                  <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleUpload} disabled={uploading} />
                 </label>
                 {form.imageUrl && (
                   <img src={form.imageUrl} alt="" className="w-12 h-12 rounded-xl object-cover" />
