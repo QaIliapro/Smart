@@ -34,6 +34,7 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
       const res = await fetch('/api/upload', { method: 'POST', body: fd })
       const data = await res.json()
       if (data.url) {
+        alert('URL фото: ' + data.url)
         setForm(f => ({ ...f, imageUrl: data.url }))
       } else {
         alert('Ответ сервера: ' + JSON.stringify(data))
