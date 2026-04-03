@@ -2,21 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 
-function checkAuth() {
-  const cookieStore = cookies()
-  const auth = cookieStore.get('admin-auth')
-  return auth?.value === 'true'
+async function checkAuth() {
+  const cookieStore = await cookies()
+  return cookieStore.get('admin-auth')?.value === 'true'
 }
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  if (!checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!await checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await req.json()
   const product = await prisma.newProduct.update({ where: { id: params.id }, data: body })
   return NextResponse.json(product)
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
-  if (!checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!await checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   await prisma.newProduct.delete({ where: { id: params.id } })
   return NextResponse.json({ success: true })
 }

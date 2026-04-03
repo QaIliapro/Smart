@@ -16,14 +16,11 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-24">
           {/* Текст и кнопки */}
           <div className="text-center mb-16">
-            <p className="text-sm font-semibold uppercase tracking-widest mb-6" style={{ color: 'var(--color-primary)' }}>
-              Новое. Проверенное. Ваше.
-            </p>
-            <h1 className="section-title mb-8 max-w-4xl mx-auto">
-              :smart — техника,<br />которой доверяют
+            <h1 className="section-title mb-6 max-w-4xl mx-auto">
+              <span style={{ color: 'var(--color-primary)' }}>Сервисный центр :smart</span><br />ремонт, выкуп и продажа техники
             </h1>
             <p className="section-subtitle mb-12 max-w-2xl mx-auto">
-              Новые Apple устройства и Trade-in с гарантией качества. Лучшие цены, быстрая доставка.
+              Работаем с 2006 года. Оригинальные запчасти. Гарантия до 90 дней.
             </p>
           </div>
 

@@ -13,6 +13,7 @@ interface Product {
   tag: string
   specs: string
   gradient: string
+  imageUrl?: string | null
   stock: number
 }
 
@@ -74,7 +75,12 @@ export default function NewPage() {
             return (
               <div key={product.id} className="card overflow-hidden flex flex-col">
                 {/* Image Placeholder */}
-                <div className={`h-56 bg-gradient-to-br ${product.gradient} relative`}>
+                <div className="relative" style={{ aspectRatio: '1 / 1' }}>
+                  {product.imageUrl ? (
+                    <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
+                  ) : (
+                    <div className={`w-full h-full bg-gradient-to-br ${product.gradient}`} />
+                  )}
                   <span className="absolute top-4 left-4 text-white text-xs font-semibold px-3 py-1 rounded-full"
                     style={{ background: 'rgba(0,0,0,0.3)' }}>
                     {product.tag}

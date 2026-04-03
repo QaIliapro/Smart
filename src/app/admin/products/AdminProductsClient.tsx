@@ -22,6 +22,19 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
   const [editId, setEditId] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const fd = new FormData()
+    fd.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body: fd })
+    const data = await res.json()
+    if (data.url) setForm(f => ({ ...f, imageUrl: data.url }))
+    setUploading(false)
+  }
 
   const reload = async () => {
     const res = await fetch('/api/admin/products')
@@ -94,21 +107,35 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
             {editId ? 'Редактировать товар' : 'Новый товар'}
           </h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { name: 'name', label: 'Название *', type: 'text', required: true, colSpan: 2 },
-              { name: 'price', label: 'Цена (₽) *', type: 'number', required: true },
-              { name: 'imageUrl', label: 'URL изображения', type: 'url', required: false },
-            ].map(field => (
-              <div key={field.name} className={field.colSpan === 2 ? 'sm:col-span-2' : ''}>
-                <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>{field.label}</label>
-                <input type={field.type} required={field.required}
-                  value={(form as Record<string, string>)[field.name]}
-                  onChange={e => setForm({ ...form, [field.name]: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                  style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
-                />
+            <div className="sm:col-span-2">
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Название *</label>
+              <input type="text" required value={form.name}
+                onChange={e => setForm({ ...form, name: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Цена (₽) *</label>
+              <input type="number" required value={form.price}
+                onChange={e => setForm({ ...form, price: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Фото</label>
+              <div className="flex items-center gap-3">
+                <label className="flex-1 px-4 py-3 rounded-xl text-sm cursor-pointer text-center font-medium transition-opacity hover:opacity-80"
+                  style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+                  {uploading ? 'Загрузка...' : form.imageUrl ? '✅ Фото загружено' : '📷 Выбрать фото'}
+                  <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
+                </label>
+                {form.imageUrl && (
+                  <img src={form.imageUrl} alt="" className="w-12 h-12 rounded-xl object-cover" />
+                )}
               </div>
-            ))}
+            </div>
             <div>
               <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Состояние *</label>
               <select value={form.condition} onChange={e => setForm({ ...form, condition: e.target.value })}

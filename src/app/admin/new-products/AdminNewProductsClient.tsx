@@ -14,6 +14,7 @@ interface NewProduct {
   description: string
   colors: string
   gradient: string
+  imageUrl: string | null
   stock: number
   active: boolean
 }
@@ -29,6 +30,7 @@ const emptyForm = {
   colors: '',
   gradient: 'from-blue-400 to-purple-600',
   stock: '',
+  imageUrl: '',
 }
 
 export default function AdminNewProductsClient({ initialProducts }: { initialProducts: NewProduct[] }) {
@@ -37,6 +39,30 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
   const [editId, setEditId] = useState<string | null>(null)
   const [showForm, setShowForm] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [uploading, setUploading] = useState(false)
+
+  const toSlug = (str: string) =>
+    str.toLowerCase().trim()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9\-]/g, '')
+      .replace(/-+/g, '-')
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const name = e.target.value
+    setForm(f => ({ ...f, name, slug: f.slug && f.slug !== toSlug(f.name) ? f.slug : toSlug(name) }))
+  }
+
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    const fd = new FormData()
+    fd.append('file', file)
+    const res = await fetch('/api/upload', { method: 'POST', body: fd })
+    const data = await res.json()
+    if (data.url) setForm(f => ({ ...f, imageUrl: data.url }))
+    setUploading(false)
+  }
 
   const reload = async () => {
     const res = await fetch('/api/admin/new-products')
@@ -83,6 +109,7 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
       colors: p.colors,
       gradient: p.gradient,
       stock: String(p.stock),
+      imageUrl: p.imageUrl || '',
     })
     setEditId(p.id)
     setShowForm(true)
@@ -122,15 +149,30 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
             {editId ? 'Редактировать товар' : 'Новый товар'}
           </h2>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="sm:col-span-2">
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Название *</label>
+              <input type="text" required value={form.name} onChange={handleNameChange}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>
+                Slug (URL) — генерируется автоматически
+              </label>
+              <input type="text" required value={form.slug}
+                onChange={e => setForm({ ...form, slug: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-tertiary)' }}
+              />
+            </div>
             {[
-              { name: 'name', label: 'Название *', type: 'text', required: true, colSpan: 2 },
-              { name: 'slug', label: 'Slug (URL) *', type: 'text', required: true },
               { name: 'tag', label: 'Тег (Новинка, Pro...)', type: 'text', required: false },
               { name: 'price', label: 'Цена (₽) *', type: 'number', required: true },
               { name: 'stock', label: 'Остаток на складе *', type: 'number', required: true },
               { name: 'gradient', label: 'Gradient CSS классы', type: 'text', required: false },
             ].map(field => (
-              <div key={field.name} className={field.colSpan === 2 ? 'sm:col-span-2' : ''}>
+              <div key={field.name}>
                 <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>{field.label}</label>
                 <input type={field.type} required={field.required}
                   value={(form as Record<string, string>)[field.name]}
@@ -140,6 +182,19 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
                 />
               </div>
             ))}
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Фото товара</label>
+              <div className="flex items-center gap-3">
+                <label className="flex-1 px-4 py-3 rounded-xl text-sm cursor-pointer text-center font-medium transition-opacity hover:opacity-80"
+                  style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+                  {uploading ? 'Загрузка...' : form.imageUrl ? '✅ Фото загружено' : '📷 Выбрать фото'}
+                  <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
+                </label>
+                {form.imageUrl && (
+                  <img src={form.imageUrl} alt="" className="w-12 h-12 rounded-xl object-cover" />
+                )}
+              </div>
+            </div>
             <div>
               <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Категория *</label>
               <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })}
@@ -181,7 +236,10 @@ export default function AdminNewProductsClient({ initialProducts }: { initialPro
       <div className="flex flex-col gap-4">
         {products.map(p => (
           <div key={p.id} className="card p-6 flex items-center gap-6">
-            <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${p.gradient} flex-shrink-0`} />
+            {p.imageUrl
+              ? <img src={p.imageUrl} alt={p.name} className="w-12 h-12 rounded-xl object-cover flex-shrink-0" />
+              : <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${p.gradient} flex-shrink-0`} />
+            }
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-1 flex-wrap">
                 <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>{p.name}</h3>

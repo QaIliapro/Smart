@@ -51,6 +51,7 @@ model NewProduct {
   description String
   colors      String
   gradient    String
+  imageUrl    String?
   stock       Int      @default(0)
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
@@ -65,4 +66,24 @@ model RepairRequest {
   phone     String
   status    String   @default("new")
   createdAt DateTime @default(now())
+}
+
+model RepairService {
+  id       String        @id @default(cuid())
+  title    String
+  icon     String
+  order    Int           @default(0)
+  free     Boolean       @default(false)
+  active   Boolean       @default(true)
+  prices   RepairPrice[]
+}
+
+model RepairPrice {
+  id        String        @id @default(cuid())
+  serviceId String
+  service   RepairService @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  category  String
+  model     String
+  price     Float?
+  free      Boolean       @default(false)
 }

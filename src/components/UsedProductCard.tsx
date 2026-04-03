@@ -9,6 +9,7 @@ interface UsedProduct {
   condition: string
   description: string
   specs: string
+  imageUrl?: string | null
 }
 
 interface Props {
@@ -28,7 +29,13 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
 
   return (
     <div className="card overflow-hidden flex flex-col">
-      <div className={`h-48 bg-gradient-to-br ${gradient} relative`}>
+      <div className="relative" style={{ aspectRatio: '1 / 1' }}>
+        {product.imageUrl ? (
+          <img src={product.imageUrl} alt={product.name}
+            className="w-full h-full object-cover" />
+        ) : (
+          <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
+        )}
         <span className="absolute top-4 left-4 text-white text-xs font-semibold px-3 py-1.5 rounded-full"
           style={{ background: conditionColor }}>
           {product.condition}
