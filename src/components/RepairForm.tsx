@@ -89,7 +89,16 @@ export default function RepairForm() {
         <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Телефон *</label>
         <input
           type="tel" required value={form.phone}
-          onChange={e => setForm({ ...form, phone: e.target.value })}
+          onChange={e => {
+            const digits = e.target.value.replace(/\D/g, '').slice(0, 11)
+            let formatted = ''
+            if (digits.length > 0) formatted = '+7'
+            if (digits.length > 1) formatted += ' (' + digits.slice(1, 4)
+            if (digits.length >= 4) formatted += ') ' + digits.slice(4, 7)
+            if (digits.length >= 7) formatted += '-' + digits.slice(7, 9)
+            if (digits.length >= 9) formatted += '-' + digits.slice(9, 11)
+            setForm({ ...form, phone: formatted })
+          }}
           placeholder="+7 (999) 000-00-00"
           className="w-full px-4 py-3 rounded-xl text-sm outline-none"
           style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
