@@ -41,31 +41,32 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
           {product.condition}
         </span>
       </div>
-      <div className="p-6 flex flex-col flex-1">
-        <h3 className="font-semibold text-lg mb-1" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
-        <p className="text-sm mb-1" style={{ color: 'var(--color-text-secondary)' }}>
-          {specs.slice(0, 2).join(' · ')}
-        </p>
-        <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--color-text-muted)' }}>{product.description}</p>
-        <p className="text-2xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
+      <div className="p-4 flex flex-col flex-1">
+        <div style={{ minHeight: '2.8rem' }}>
+          <h3 className="font-semibold text-sm leading-tight" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
+        </div>
+        <p className="text-xs mb-3" style={{ color: 'var(--color-text-muted)', minHeight: '1.2rem' }}>{product.description.slice(0, 40)}…</p>
+        <p className="text-lg font-bold mb-4" style={{ color: 'var(--color-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
         <div className="mt-auto flex flex-col gap-2">
           <AddToCartButton
             product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: product.imageUrl ?? undefined }}
           />
-          <div className="grid grid-cols-2 gap-2">
-            {vk && (
-              <a href={vk} target="_blank" rel="noopener noreferrer"
-                className="text-center py-2 px-3 rounded-lg text-xs font-medium text-white transition-all hover:scale-105"
-                style={{ background: 'linear-gradient(135deg, #0077FF, #0057CC)', boxShadow: '0 2px 8px rgba(0,119,255,0.3)' }}
-              >ВКонтакте</a>
-            )}
-            {max && (
-              <a href={max} target="_blank" rel="noopener noreferrer"
-                className="text-center py-2 px-3 rounded-lg text-xs font-medium text-white transition-all hover:scale-105"
-                style={{ background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)', boxShadow: '0 2px 8px rgba(84,114,255,0.3)' }}
-              >MAX</a>
-            )}
-          </div>
+          {(vk || max) && (
+            <div className="flex gap-2">
+              {vk && (
+                <a href={vk} target="_blank" rel="noopener noreferrer"
+                  className="flex-1 text-center py-2 px-2 rounded-lg text-xs font-medium text-white"
+                  style={{ background: 'linear-gradient(135deg, #0077FF, #0057CC)' }}
+                >ВК</a>
+              )}
+              {max && (
+                <a href={max} target="_blank" rel="noopener noreferrer"
+                  className="flex-1 text-center py-2 px-2 rounded-lg text-xs font-medium text-white"
+                  style={{ background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)' }}
+                >MAX</a>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
