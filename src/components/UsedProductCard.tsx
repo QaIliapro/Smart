@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import AddToCartButton from './AddToCartButton'
 
 interface UsedProduct {
@@ -47,6 +48,9 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
           <AddToCartButton
             product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: product.imageUrl ?? undefined }}
           />
+          <Link href={`/trade-in/${product.id}`} className="btn-secondary w-full text-sm text-center">
+            Подробнее
+          </Link>
         </div>
       </div>
     </div>
