@@ -93,7 +93,7 @@ export default function NewPage() {
                   <div className="mb-1">
                     <h3 className="font-semibold text-base leading-tight" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
                   </div>
-                  <p className="text-xs mb-3" style={{ color: 'var(--color-text-secondary)' }}>
+                  <p className="text-xs mb-3" style={{ color: 'var(--color-text-secondary)', minHeight: '2.5rem' }}>
                     {specs.slice(0, 2).join(' · ')}
                   </p>
                   <p className="text-xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
