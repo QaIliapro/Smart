@@ -38,11 +38,11 @@ export default function CartPage() {
               style={{ background: 'linear-gradient(135deg, var(--bg-secondary), var(--border-color))' }}
             />
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold" style={{ color: 'var(--text-primary)' }}>{item.name}</h3>
+              <h3 className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{item.name}</h3>
               {item.condition && (
                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.condition}</p>
               )}
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.price} ₽ за шт.</p>
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.price.toLocaleString('ru-RU')} ₽ за шт.</p>
             </div>
             {/* Qty Controls */}
             <div className="flex items-center gap-3">
@@ -56,8 +56,8 @@ export default function CartPage() {
                 style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
               >+</button>
             </div>
-            <p className="font-semibold w-20 text-right" style={{ color: 'var(--text-primary)' }}>
-              {item.price * item.quantity} ₽
+            <p className="font-semibold w-24 text-right flex-shrink-0" style={{ color: 'var(--text-primary)' }}>
+              {(item.price * item.quantity).toLocaleString('ru-RU')} ₽
             </p>
             <button onClick={() => removeItem(item.id)}
               className="w-8 h-8 flex items-center justify-center rounded-full transition-colors hover:opacity-70"

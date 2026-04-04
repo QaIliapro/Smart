@@ -6,6 +6,23 @@ import { useCart } from '@/context/CartContext'
 export default function CheckoutModal({ onClose }: { onClose: () => void }) {
   const { items, total, clearCart } = useCart()
   const [form, setForm] = useState({ name: '', phone: '', email: '', comment: '' })
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 11)
+    let formatted = ''
+    if (digits.length === 0) {
+      formatted = ''
+    } else {
+      const d = digits.startsWith('8') || digits.startsWith('7') ? digits.slice(1) : digits
+      const trimmed = d.slice(0, 10)
+      formatted = '+7'
+      if (trimmed.length > 0) formatted += ' (' + trimmed.slice(0, 3)
+      if (trimmed.length >= 3) formatted += ') ' + trimmed.slice(3, 6)
+      if (trimmed.length >= 6) formatted += '-' + trimmed.slice(6, 8)
+      if (trimmed.length >= 8) formatted += '-' + trimmed.slice(8, 10)
+    }
+    setForm({ ...form, phone: formatted })
+  }
   const [loading, setLoading] = useState(false)
   const [orderId, setOrderId] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -75,23 +92,31 @@ export default function CheckoutModal({ onClose }: { onClose: () => void }) {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {[
-              { name: 'name', label: 'Имя *', type: 'text', required: true },
-              { name: 'phone', label: 'Телефон *', type: 'tel', required: true },
-              { name: 'email', label: 'Email', type: 'email', required: false },
-            ].map(field => (
-              <div key={field.name}>
-                <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>{field.label}</label>
-                <input
-                  type={field.type}
-                  required={field.required}
-                  value={(form as Record<string, string>)[field.name]}
-                  onChange={e => setForm({ ...form, [field.name]: e.target.value })}
-                  className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                  style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
-                />
-              </div>
-            ))}
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Имя *</label>
+              <input type="text" required value={form.name}
+                onChange={e => setForm({ ...form, name: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Телефон *</label>
+              <input type="tel" required value={form.phone}
+                onChange={handlePhoneChange}
+                placeholder="+7 (___) ___-__-__"
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+              />
+            </div>
+            <div>
+              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Email</label>
+              <input type="email" value={form.email}
+                onChange={e => setForm({ ...form, email: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
+                style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
+              />
+            </div>
 
             <div className="px-4 py-3 rounded-xl text-sm"
               style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
