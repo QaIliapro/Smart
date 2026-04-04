@@ -1,20 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
+import { writeFile, mkdir, unlink } from 'fs/promises'
 import { join } from 'path'
+import { exec } from 'child_process'
+import { promisify } from 'util'
 import sharp from 'sharp'
 
-async function toJpegBuffer(inputBuffer: Buffer, mimeType: string): Promise<Buffer> {
-  if (mimeType === 'image/heic' || mimeType === 'image/heif') {
-    const heicConvert = (await import('heic-convert')).default
-    const outputBuffer = await heicConvert({
-      buffer: inputBuffer,
-      format: 'JPEG',
-      quality: 0.85,
-    })
-    return Buffer.from(outputBuffer)
-  }
-  return sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toBuffer()
-}
+const execAsync = promisify(exec)
 
 export async function POST(req: NextRequest) {
   if (req.cookies.get('admin-auth')?.value !== 'true') {
@@ -32,11 +23,21 @@ export async function POST(req: NextRequest) {
     const uploadDir = join(process.cwd(), 'public', 'uploads')
     await mkdir(uploadDir, { recursive: true })
 
-    const filename = `${Date.now()}.jpg`
+    const baseName = `${Date.now()}`
+    const filename = `${baseName}.jpg`
     const filepath = join(uploadDir, filename)
 
-    const jpegBuffer = await toJpegBuffer(inputBuffer, file.type)
-    await writeFile(filepath, jpegBuffer)
+    const isHeic = file.type === 'image/heic' || file.type === 'image/heif' ||
+      file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')
+
+    if (isHeic) {
+      const tmpInput = join(uploadDir, `${baseName}_tmp.heic`)
+      await writeFile(tmpInput, inputBuffer)
+      await execAsync(`ffmpeg -i "${tmpInput}" -q:v 2 "${filepath}"`)
+      await unlink(tmpInput)
+    } else {
+      await sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toFile(filepath)
+    }
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
     const url = `${siteUrl}/uploads/${filename}`
