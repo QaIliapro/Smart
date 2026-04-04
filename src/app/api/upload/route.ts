@@ -7,6 +7,15 @@ import sharp from 'sharp'
 
 const execAsync = promisify(exec)
 
+function isHeicBuffer(buf: Buffer): boolean {
+  // HEIC/HEIF magic: bytes 4-11 contain 'ftyp' + brand
+  if (buf.length < 12) return false
+  const ftyp = buf.slice(4, 8).toString('ascii')
+  if (ftyp !== 'ftyp') return false
+  const brand = buf.slice(8, 12).toString('ascii')
+  return ['heic', 'heix', 'hevc', 'hevx', 'mif1', 'msf1'].includes(brand)
+}
+
 export async function POST(req: NextRequest) {
   if (req.cookies.get('admin-auth')?.value !== 'true') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -27,13 +36,10 @@ export async function POST(req: NextRequest) {
     const filename = `${baseName}.jpg`
     const filepath = join(uploadDir, filename)
 
-    const isHeic = file.type === 'image/heic' || file.type === 'image/heif' ||
-      file.name.toLowerCase().endsWith('.heic') || file.name.toLowerCase().endsWith('.heif')
-
-    if (isHeic) {
+    if (isHeicBuffer(inputBuffer)) {
       const tmpInput = join(uploadDir, `${baseName}_tmp.heic`)
       await writeFile(tmpInput, inputBuffer)
-      await execAsync(`ffmpeg -i "${tmpInput}" -q:v 2 "${filepath}"`)
+      await execAsync(`ffmpeg -y -i "${tmpInput}" -q:v 2 "${filepath}"`)
       await unlink(tmpInput)
     } else {
       await sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toFile(filepath)
