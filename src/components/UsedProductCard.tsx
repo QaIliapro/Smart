@@ -50,7 +50,7 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
         <p className="text-2xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
         <div className="mt-auto flex flex-col gap-2">
           <AddToCartButton
-            product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition }}
+            product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: product.imageUrl ?? undefined }}
           />
           <div className="grid grid-cols-2 gap-2">
             {vk && (

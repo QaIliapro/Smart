@@ -101,7 +101,7 @@ export default function NewPage() {
                   </p>
                   <div className="mt-auto flex flex-col gap-2">
                     {product.stock > 0 ? (
-                      <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} />
+                      <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new', imageUrl: product.imageUrl ?? undefined }} />
                     ) : (
                       <button disabled className="btn-primary w-full text-sm opacity-40 cursor-not-allowed">Нет в наличии</button>
                     )}

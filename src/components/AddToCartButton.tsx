@@ -10,6 +10,7 @@ interface Props {
     price: number
     type: 'new' | 'used'
     condition?: string
+    imageUrl?: string
   }
   className?: string
   fullWidth?: boolean

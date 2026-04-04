@@ -35,9 +35,13 @@ export default function CartPage() {
         {items.map(item => (
           <div key={item.id} className="card p-4 flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <div className="w-14 h-14 rounded-xl flex-shrink-0"
-                style={{ background: 'linear-gradient(135deg, var(--bg-secondary), var(--border-color))' }}
-              />
+              {item.imageUrl ? (
+                <img src={item.imageUrl} alt={item.name} className="w-14 h-14 rounded-xl object-cover flex-shrink-0" />
+              ) : (
+                <div className="w-14 h-14 rounded-xl flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg, var(--bg-secondary), var(--border-color))' }}
+                />
+              )}
               <div className="flex-1 overflow-hidden">
                 <h3 className="font-semibold text-sm leading-tight" style={{ color: 'var(--text-primary)', wordBreak: 'break-word' }}>{item.name}</h3>
                 {item.condition && (

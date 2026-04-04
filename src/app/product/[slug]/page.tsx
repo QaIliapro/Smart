@@ -76,7 +76,7 @@ export default async function ProductPage({ params }: { params: { slug: string }
             {outOfStock ? (
               <button disabled className="btn-primary w-full py-4 text-base opacity-40 cursor-not-allowed">Нет в наличии</button>
             ) : (
-              <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} fullWidth />
+              <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new', imageUrl: product.imageUrl ?? undefined }} fullWidth />
             )}
             <div className="grid grid-cols-2 gap-3">
               {vk && (

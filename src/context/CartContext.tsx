@@ -9,6 +9,7 @@ export interface CartItem {
   quantity: number
   type: 'new' | 'used'
   condition?: string
+  imageUrl?: string
 }
 
 type CartAction =
