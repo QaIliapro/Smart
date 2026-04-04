@@ -68,7 +68,7 @@ export default function NewPage() {
       {loading ? (
         <div className="text-center py-24" style={{ color: 'var(--color-text-secondary)' }}>Загрузка...</div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filtered.map(product => {
             let specs: string[] = []
             try { specs = JSON.parse(product.specs) } catch {}
