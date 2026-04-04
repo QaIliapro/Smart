@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
+import sharp from 'sharp'
 
 export async function POST(req: NextRequest) {
   if (req.cookies.get('admin-auth')?.value !== 'true') {
@@ -13,14 +14,19 @@ export async function POST(req: NextRequest) {
     if (!file) return NextResponse.json({ error: 'No file' }, { status: 400 })
 
     const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
+    const inputBuffer = Buffer.from(bytes)
 
     const uploadDir = join(process.cwd(), 'public', 'uploads')
     await mkdir(uploadDir, { recursive: true })
 
-    const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`
+    const baseName = `${Date.now()}`
+    const filename = `${baseName}.jpg`
     const filepath = join(uploadDir, filename)
-    await writeFile(filepath, buffer)
+
+    await sharp(inputBuffer)
+      .rotate()
+      .jpeg({ quality: 85 })
+      .toFile(filepath)
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
     const url = `${siteUrl}/uploads/${filename}`
