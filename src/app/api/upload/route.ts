@@ -3,6 +3,19 @@ import { writeFile, mkdir } from 'fs/promises'
 import { join } from 'path'
 import sharp from 'sharp'
 
+async function toJpegBuffer(inputBuffer: Buffer, mimeType: string): Promise<Buffer> {
+  if (mimeType === 'image/heic' || mimeType === 'image/heif') {
+    const heicConvert = (await import('heic-convert')).default
+    const outputBuffer = await heicConvert({
+      buffer: inputBuffer,
+      format: 'JPEG',
+      quality: 0.85,
+    })
+    return Buffer.from(outputBuffer)
+  }
+  return sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toBuffer()
+}
+
 export async function POST(req: NextRequest) {
   if (req.cookies.get('admin-auth')?.value !== 'true') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -19,14 +32,11 @@ export async function POST(req: NextRequest) {
     const uploadDir = join(process.cwd(), 'public', 'uploads')
     await mkdir(uploadDir, { recursive: true })
 
-    const baseName = `${Date.now()}`
-    const filename = `${baseName}.jpg`
+    const filename = `${Date.now()}.jpg`
     const filepath = join(uploadDir, filename)
 
-    await sharp(inputBuffer)
-      .rotate()
-      .jpeg({ quality: 85 })
-      .toFile(filepath)
+    const jpegBuffer = await toJpegBuffer(inputBuffer, file.type)
+    await writeFile(filepath, jpegBuffer)
 
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
     const url = `${siteUrl}/uploads/${filename}`
