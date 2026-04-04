@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 interface Order {
@@ -28,6 +28,11 @@ const statusColors: Record<string, string> = {
 export default function AdminOrdersClient({ initialOrders }: { initialOrders: Order[] }) {
   const [orders, setOrders] = useState(initialOrders)
   const [expandedId, setExpandedId] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/orders', { credentials: 'include' })
+      .then(r => r.json()).then(data => { if (Array.isArray(data)) setOrders(data) })
+  }, [])
 
   const updateStatus = async (id: string, status: string) => {
     await fetch(`/api/admin/orders/${id}`, {

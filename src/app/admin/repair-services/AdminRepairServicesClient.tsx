@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const CATEGORIES = [
   { key: 'iphone', label: 'iPhone' },
@@ -37,6 +37,11 @@ interface RepairService {
 export default function AdminRepairServicesClient({ initialServices }: { initialServices: RepairService[] }) {
   const [services, setServices] = useState<RepairService[]>(initialServices)
   const [selected, setSelected] = useState<RepairService | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/repair-services', { credentials: 'include' })
+      .then(r => r.json()).then(data => { if (Array.isArray(data)) setServices(data) })
+  }, [])
   const [activeTab, setActiveTab] = useState('iphone')
   const [saving, setSaving] = useState(false)
   const [showNewForm, setShowNewForm] = useState(false)

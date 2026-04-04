@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 interface RepairRequest {
@@ -28,6 +28,11 @@ const statusColors: Record<string, string> = {
 export default function AdminRepairsClient({ initialRequests }: { initialRequests: RepairRequest[] }) {
   const [requests, setRequests] = useState(initialRequests)
   const [expandedId, setExpandedId] = useState<string | null>(null)
+
+  useEffect(() => {
+    fetch('/api/admin/repairs', { credentials: 'include' })
+      .then(r => r.json()).then(data => { if (Array.isArray(data)) setRequests(data) })
+  }, [])
 
   const updateStatus = async (id: string, status: string) => {
     await fetch(`/api/admin/repairs/${id}`, {

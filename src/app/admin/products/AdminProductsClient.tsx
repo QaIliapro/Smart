@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
 interface Product {
@@ -50,6 +50,8 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
     const data = await res.json()
     if (Array.isArray(data)) setProducts(data)
   }
+
+  useEffect(() => { reload() }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
