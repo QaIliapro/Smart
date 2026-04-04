@@ -36,10 +36,6 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
         ) : (
           <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
         )}
-        <span className="absolute top-4 left-4 text-white text-xs font-semibold px-3 py-1.5 rounded-full"
-          style={{ background: conditionColor }}>
-          {product.condition}
-        </span>
       </div>
       <div className="p-4 flex flex-col flex-1">
         <div style={{ minHeight: '2.8rem' }}>
@@ -51,22 +47,6 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
           <AddToCartButton
             product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: product.imageUrl ?? undefined }}
           />
-          {(vk || max) && (
-            <div className="flex gap-2">
-              {vk && (
-                <a href={vk} target="_blank" rel="noopener noreferrer"
-                  className="flex-1 text-center py-2 px-2 rounded-lg text-xs font-medium text-white"
-                  style={{ background: 'linear-gradient(135deg, #0077FF, #0057CC)' }}
-                >ВК</a>
-              )}
-              {max && (
-                <a href={max} target="_blank" rel="noopener noreferrer"
-                  className="flex-1 text-center py-2 px-2 rounded-lg text-xs font-medium text-white"
-                  style={{ background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)' }}
-                >MAX</a>
-              )}
-            </div>
-          )}
         </div>
       </div>
     </div>
