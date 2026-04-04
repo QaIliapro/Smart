@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
-import { createClient } from '@libsql/client'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -13,8 +12,7 @@ function createPrismaClient() {
     return new PrismaClient()
   }
   const authToken = process.env.TURSO_AUTH_TOKEN
-  const libsql = createClient({ url, authToken })
-  const adapter = new PrismaLibSql(libsql)
+  const adapter = new PrismaLibSql({ url, authToken })
   return new PrismaClient({ adapter })
 }
 
