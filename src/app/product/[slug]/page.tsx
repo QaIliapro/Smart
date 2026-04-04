@@ -23,7 +23,13 @@ export default async function ProductPage({ params }: { params: { slug: string }
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Image */}
-        <div className={`rounded-3xl h-64 sm:h-[500px] bg-gradient-to-br ${product.gradient} sticky top-24`} />
+        <div className="lg:sticky lg:top-24">
+          {product.imageUrl ? (
+            <img src={product.imageUrl} alt={product.name} className="w-full rounded-3xl object-cover" style={{ aspectRatio: '1/1' }} />
+          ) : (
+            <div className={`rounded-3xl h-64 sm:h-[500px] bg-gradient-to-br ${product.gradient}`} />
+          )}
+        </div>
 
         {/* Details */}
         <div className="flex flex-col gap-6">
