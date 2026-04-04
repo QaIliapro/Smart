@@ -9,9 +9,7 @@ declare global {
 function createPrismaClient() {
   const url = process.env.DATABASE_URL!
   if (url.startsWith('postgresql') || url.startsWith('postgres')) {
-    return new PrismaClient({
-      datasources: { db: { url } },
-    })
+    return new PrismaClient()
   }
   const authToken = process.env.TURSO_AUTH_TOKEN
   const adapter = new PrismaLibSql({ url, authToken })
