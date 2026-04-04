@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { cookies } from 'next/headers'
 
-async function isAuth() {
-  const cookieStore = await cookies()
-  return cookieStore.get('admin_session')?.value === 'authenticated'
+function checkAuth(req: NextRequest) {
+  return req.cookies.get('admin-auth')?.value === 'true'
 }
 
 // Полная замена всех цен для сервиса
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
-  if (!await isAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!checkAuth(req)) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const body = await req.json() // массив { category, model, price, free }
 
   await prisma.repairPrice.deleteMany({ where: { serviceId: params.id } })

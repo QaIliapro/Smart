@@ -51,7 +51,8 @@
       "Bash(python3 -c \"import sys; d=sys.stdin.read\\(\\); print\\('500' in d, 'DB ERROR' in d, d[:500]\\)\")",
       "Bash(grep -v \"^$\")",
       "Bash(wget -q -O /dev/null '--header=Cookie: admin-auth=true' --server-response http://localhost:3000__TRACKED_VAR__)",
-      "Bash(printf \"https://smart-chi-lime.vercel.app\")"
+      "Bash(printf \"https://smart-chi-lime.vercel.app\")",
+      "Bash(python3 -c \"import sys; d=sys.stdin.read\\(\\); i=d.find\\('{'\\); print\\(d[i:i+300] if i>0 else d[-300:]\\)\")"
     ]
   }
 }

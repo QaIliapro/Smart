@@ -48,7 +48,7 @@ const categories = [
 ] as const
 
 export default function RepairServiceCard({ icon, title, prices, free }: RepairServiceCardProps) {
-  const Icon = iconMap[icon]
+  const Icon = iconMap[icon] ?? Smartphone
   const [open, setOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<keyof ServicePrices>('iphone')
 
