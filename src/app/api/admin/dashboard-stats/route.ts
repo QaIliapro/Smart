@@ -21,9 +21,9 @@ export async function GET(req: NextRequest) {
         usedProducts: usedProducts.length,
         newProducts: newProducts.length,
         repairRequests: repairRequests.length,
-        newOrders: orders.filter(o => o.status === 'new').length,
-        newRepairs: repairRequests.filter(r => r.status === 'new').length,
-        total: orders.reduce((sum, o) => sum + o.total, 0),
+        newOrders: orders.filter((o: { status: string }) => o.status === 'new').length,
+        newRepairs: repairRequests.filter((r: { status: string }) => r.status === 'new').length,
+        total: orders.reduce((sum: number, o: { total: number }) => sum + o.total, 0),
       }
     })
   } catch (e: unknown) {
