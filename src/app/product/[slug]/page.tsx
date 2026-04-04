@@ -100,14 +100,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
         </div>
       </div>
 
-      {/* Mobile sticky bar */}
-      {!outOfStock && (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 z-30"
-          style={{ background: 'var(--color-bg-page)', borderTop: '1px solid var(--color-border)' }}
-        >
-          <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} fullWidth />
-        </div>
-      )}
     </div>
   )
 }
