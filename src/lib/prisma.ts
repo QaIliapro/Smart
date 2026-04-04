@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaLibSql } from '@prisma/adapter-libsql'
+import { PrismaPg } from '@prisma/adapter-pg'
 
 declare global {
   // eslint-disable-next-line no-var
@@ -9,7 +10,8 @@ declare global {
 function createPrismaClient() {
   const url = process.env.DATABASE_URL!
   if (url.startsWith('postgresql') || url.startsWith('postgres')) {
-    return new PrismaClient()
+    const adapter = new PrismaPg({ connectionString: url })
+    return new PrismaClient({ adapter })
   }
   const authToken = process.env.TURSO_AUTH_TOKEN
   const adapter = new PrismaLibSql({ url, authToken })
