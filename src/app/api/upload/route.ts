@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir, unlink } from 'fs/promises'
-import { join } from 'path'
-import { exec } from 'child_process'
-import { promisify } from 'util'
+import { writeFile, mkdir } from 'fs/promises'
+import { join, extname } from 'path'
 import sharp from 'sharp'
-
-const execAsync = promisify(exec)
 
 function isHeicBuffer(buf: Buffer): boolean {
   if (buf.length < 12) return false
@@ -32,21 +28,20 @@ export async function POST(req: NextRequest) {
     await mkdir(uploadDir, { recursive: true })
 
     const baseName = `${Date.now()}`
-    const filename = `${baseName}.jpg`
-    const filepath = join(uploadDir, filename)
 
     if (isHeicBuffer(inputBuffer)) {
-      const tmpInput = join(uploadDir, `${baseName}_tmp.heic`)
-      await writeFile(tmpInput, inputBuffer)
-      await execAsync(`convert "${tmpInput}" -quality 85 "${filepath}"`)
-      await unlink(tmpInput)
-    } else {
-      await sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toFile(filepath)
+      // Сохраняем как есть с правильным расширением
+      const filename = `${baseName}.heic`
+      await writeFile(join(uploadDir, filename), inputBuffer)
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+      return NextResponse.json({ url: `${siteUrl}/uploads/${filename}` })
     }
 
+    // Для остальных форматов конвертируем в JPEG через sharp
+    const filename = `${baseName}.jpg`
+    await sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toFile(join(uploadDir, filename))
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
-    const url = `${siteUrl}/uploads/${filename}`
-    return NextResponse.json({ url })
+    return NextResponse.json({ url: `${siteUrl}/uploads/${filename}` })
   } catch (error) {
     return NextResponse.json({ error: String(error) }, { status: 500 })
   }
