@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation'
-import { prisma } from '@/lib/prisma'
 import AddToCartButton from '@/components/AddToCartButton'
 import ProductColorPicker from '@/components/ProductColorPicker'
 
 export const revalidate = 60
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const product = await prisma.newProduct.findUnique({ where: { slug: params.slug, active: true } })
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3001'}/api/new-products`, { cache: 'no-store' })
+  const products = res.ok ? await res.json() : []
+  const product = products.find((p: { slug: string; active: boolean }) => p.slug === params.slug && p.active)
   if (!product) notFound()
 
   let specs: string[] = []
@@ -16,7 +17,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
   const vk = process.env.NEXT_PUBLIC_VK_URL
   const max = process.env.NEXT_PUBLIC_MAX_URL
-
   const outOfStock = product.stock === 0
 
   return (

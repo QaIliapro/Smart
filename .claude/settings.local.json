@@ -50,7 +50,8 @@
       "Bash(printf \"eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NzUyODY5OTEsImlkIjoiMDE5ZDRmMjAtNTEwMS03YTUyLTgwZGMtZWViYWQzMGVkMTkwIiwicmlkIjoiZmU1ZGYxNGQtNWMxZC00YjQ1LWIyMjMtNjc5Zjg2NWM0OWFkIn0.ErmrP8Oc4DZsFoATiaERwLEgNj9EqygLw7CkIzVvIids1jSGXl1HCqXLUpbByEG10l8Yq-0iIbvzXdnOi3RtBQ\")",
       "Bash(python3 -c \"import sys; d=sys.stdin.read\\(\\); print\\('500' in d, 'DB ERROR' in d, d[:500]\\)\")",
       "Bash(grep -v \"^$\")",
-      "Bash(wget -q -O /dev/null '--header=Cookie: admin-auth=true' --server-response http://localhost:3000__TRACKED_VAR__)"
+      "Bash(wget -q -O /dev/null '--header=Cookie: admin-auth=true' --server-response http://localhost:3000__TRACKED_VAR__)",
+      "Bash(printf \"https://smart-chi-lime.vercel.app\")"
     ]
   }
 }
