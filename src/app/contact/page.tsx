@@ -66,6 +66,17 @@ export default function ContactPage() {
             <h3 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Написать напрямую</h3>
             <div className="flex flex-col gap-3">
               <a
+                href="tel:+79033320101"
+                className="py-3 rounded-full text-center text-sm font-medium text-white transition-all duration-200 hover:scale-105 flex items-center justify-center gap-2"
+                style={{
+                  background: 'linear-gradient(135deg, var(--color-primary), #E8512F)',
+                  boxShadow: '0 4px 15px rgba(215,55,17,0.4)',
+                }}
+              >
+                <Phone size={18} />
+                Позвонить: +7‒903‒332‒01‒01
+              </a>
+              <a
                 href="https://2gis.ru/togliatti/firm/3096753025186134"
                 target="_blank"
                 rel="noopener noreferrer"
