@@ -81,30 +81,31 @@ export default function NewPage() {
                   ) : (
                     <div className={`w-full h-full bg-gradient-to-br ${product.gradient}`} />
                   )}
-                  <span className="absolute top-4 left-4 text-white text-xs font-semibold px-3 py-1 rounded-full"
-                    style={{ background: 'rgba(0,0,0,0.3)' }}>
-                    {product.tag}
-                  </span>
+                  {product.tag ? (
+                    <span className="absolute top-3 left-3 text-white text-xs font-semibold px-2 py-1 rounded-full"
+                      style={{ background: 'rgba(0,0,0,0.4)' }}>
+                      {product.tag}
+                    </span>
+                  ) : null}
                 </div>
                 {/* Content */}
-                <div className="p-6 flex flex-col flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-lg" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
-                    <StockBadge stock={product.stock} />
+                <div className="p-4 flex flex-col flex-1">
+                  <div className="mb-1">
+                    <h3 className="font-semibold text-base leading-tight" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
                   </div>
-                  <p className="text-sm mb-3" style={{ color: 'var(--color-text-secondary)' }}>
-                    {specs.slice(0, 3).join(' · ')}
+                  <p className="text-xs mb-3" style={{ color: 'var(--color-text-secondary)' }}>
+                    {specs.slice(0, 2).join(' · ')}
                   </p>
-                  <p className="text-2xl font-bold mb-6" style={{ color: 'var(--color-primary)' }}>
+                  <p className="text-xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
                     {product.price.toLocaleString('ru-RU')} ₽
                   </p>
-                  <div className="mt-auto flex gap-3">
+                  <div className="mt-auto flex flex-col gap-2">
                     {product.stock > 0 ? (
                       <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new' }} />
                     ) : (
-                      <button disabled className="btn-primary flex-1 text-sm opacity-40 cursor-not-allowed">Нет в наличии</button>
+                      <button disabled className="btn-primary w-full text-sm opacity-40 cursor-not-allowed">Нет в наличии</button>
                     )}
-                    <Link href={`/product/${product.slug}`} className="btn-secondary flex-1 text-sm text-center">
+                    <Link href={`/product/${product.slug}`} className="btn-secondary w-full text-sm text-center">
                       Подробнее
                     </Link>
                   </div>
