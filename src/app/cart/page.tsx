@@ -33,41 +33,43 @@ export default function CartPage() {
 
       <div className="flex flex-col gap-4 mb-8">
         {items.map(item => (
-          <div key={item.id} className="card p-6 flex items-center gap-6">
-            <div className="w-16 h-16 rounded-2xl flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, var(--bg-secondary), var(--border-color))' }}
-            />
-            <div className="flex-1 min-w-0">
-              <h3 className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{item.name}</h3>
-              {item.condition && (
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.condition}</p>
-              )}
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{item.price.toLocaleString('ru-RU')} ₽ за шт.</p>
-            </div>
-            {/* Qty Controls */}
+          <div key={item.id} className="card p-4 flex flex-col gap-3">
             <div className="flex items-center gap-3">
-              <button onClick={() => updateQty(item.id, item.quantity - 1)}
-                className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg transition-colors"
-                style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-              >−</button>
-              <span className="w-6 text-center font-medium" style={{ color: 'var(--text-primary)' }}>{item.quantity}</span>
-              <button onClick={() => updateQty(item.id, item.quantity + 1)}
-                className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg transition-colors"
-                style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
-              >+</button>
+              <div className="w-14 h-14 rounded-xl flex-shrink-0"
+                style={{ background: 'linear-gradient(135deg, var(--bg-secondary), var(--border-color))' }}
+              />
+              <div className="flex-1 overflow-hidden">
+                <h3 className="font-semibold text-sm leading-tight" style={{ color: 'var(--text-primary)', wordBreak: 'break-word' }}>{item.name}</h3>
+                {item.condition && (
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{item.condition}</p>
+                )}
+              </div>
+              <button onClick={() => removeItem(item.id)}
+                className="w-7 h-7 flex items-center justify-center rounded-full flex-shrink-0 transition-colors hover:opacity-70"
+                style={{ color: 'var(--text-tertiary)' }}
+              >
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/>
+                  <path d="M9 6V4h6v2"/>
+                </svg>
+              </button>
             </div>
-            <p className="font-semibold w-24 text-right flex-shrink-0" style={{ color: 'var(--text-primary)' }}>
-              {(item.price * item.quantity).toLocaleString('ru-RU')} ₽
-            </p>
-            <button onClick={() => removeItem(item.id)}
-              className="w-8 h-8 flex items-center justify-center rounded-full transition-colors hover:opacity-70"
-              style={{ color: 'var(--text-tertiary)' }}
-            >
-              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/>
-                <path d="M9 6V4h6v2"/>
-              </svg>
-            </button>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <button onClick={() => updateQty(item.id, item.quantity - 1)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg"
+                  style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                >−</button>
+                <span className="w-6 text-center font-medium text-sm" style={{ color: 'var(--text-primary)' }}>{item.quantity}</span>
+                <button onClick={() => updateQty(item.id, item.quantity + 1)}
+                  className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg"
+                  style={{ background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                >+</button>
+              </div>
+              <p className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
+                {(item.price * item.quantity).toLocaleString('ru-RU')} ₽
+              </p>
+            </div>
           </div>
         ))}
       </div>
@@ -76,7 +78,7 @@ export default function CartPage() {
       <div className="card p-8">
         <div className="flex justify-between items-center mb-8">
           <span className="text-xl font-semibold" style={{ color: 'var(--text-primary)' }}>Итого</span>
-          <span className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{total} ₽</span>
+          <span className="text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>{total.toLocaleString('ru-RU')} ₽</span>
         </div>
         <div className="flex flex-col sm:flex-row gap-4">
           <button onClick={() => setCheckoutOpen(true)} className="btn-primary flex-1 py-4 text-base">
