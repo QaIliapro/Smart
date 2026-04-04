@@ -8,7 +8,6 @@ import sharp from 'sharp'
 const execAsync = promisify(exec)
 
 function isHeicBuffer(buf: Buffer): boolean {
-  // HEIC/HEIF magic: bytes 4-11 contain 'ftyp' + brand
   if (buf.length < 12) return false
   const ftyp = buf.slice(4, 8).toString('ascii')
   if (ftyp !== 'ftyp') return false
@@ -39,7 +38,7 @@ export async function POST(req: NextRequest) {
     if (isHeicBuffer(inputBuffer)) {
       const tmpInput = join(uploadDir, `${baseName}_tmp.heic`)
       await writeFile(tmpInput, inputBuffer)
-      await execAsync(`ffmpeg -y -i "${tmpInput}" -q:v 2 "${filepath}"`)
+      await execAsync(`convert "${tmpInput}" -quality 85 "${filepath}"`)
       await unlink(tmpInput)
     } else {
       await sharp(inputBuffer).rotate().jpeg({ quality: 85 }).toFile(filepath)
