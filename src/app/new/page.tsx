@@ -28,7 +28,7 @@ function StockBadge({ stock }: { stock: number }) {
 }
 
 export default function NewPage() {
-  const [filter, setFilter] = useState<'All' | 'iPhone' | 'Mac'>('All')
+  const [filter] = useState<'All' | 'iPhone' | 'Mac'>('All')
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -49,21 +49,6 @@ export default function NewPage() {
         <p className="section-subtitle">Последние новинки Apple с официальной гарантией</p>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex gap-2 justify-center mb-12">
-        {(['All', 'iPhone', 'Mac'] as const).map(tab => (
-          <button key={tab} onClick={() => setFilter(tab)}
-            className="px-6 py-2.5 rounded-full text-sm font-medium transition-all"
-            style={{
-              background: filter === tab ? 'var(--color-primary)' : 'var(--color-bg-section)',
-              color: filter === tab ? 'white' : 'var(--color-text-secondary)',
-              border: `1px solid ${filter === tab ? 'var(--color-primary)' : 'var(--color-border)'}`,
-            }}
-          >
-            {tab === 'All' ? 'Все' : tab}
-          </button>
-        ))}
-      </div>
 
       {loading ? (
         <div className="text-center py-24" style={{ color: 'var(--color-text-secondary)' }}>Загрузка...</div>
