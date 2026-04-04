@@ -11,6 +11,7 @@ interface UsedProduct {
   description: string
   specs: string
   imageUrl?: string | null
+  images?: string
 }
 
 interface Props {
@@ -24,16 +25,16 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
   const max = process.env.NEXT_PUBLIC_MAX_URL
 
   let specs: string[] = []
-  try {
-    specs = JSON.parse(product.specs)
-  } catch {}
+  let imagesList: string[] = []
+  try { specs = JSON.parse(product.specs) } catch {}
+  try { imagesList = JSON.parse(product.images || '[]') } catch {}
+  const firstImage = imagesList[0] || product.imageUrl || null
 
   return (
     <div className="card overflow-hidden flex flex-col">
       <div className="relative" style={{ aspectRatio: '1 / 1' }}>
-        {product.imageUrl ? (
-          <img src={product.imageUrl} alt={product.name}
-            className="w-full h-full object-cover" />
+        {firstImage ? (
+          <img src={firstImage} alt={product.name} className="w-full h-full object-cover" />
         ) : (
           <div className={`w-full h-full bg-gradient-to-br ${gradient}`} />
         )}
@@ -46,7 +47,7 @@ export default function UsedProductCard({ product, gradient, conditionColor }: P
         <p className="text-lg font-bold mb-4" style={{ color: 'var(--color-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
         <div className="mt-auto flex flex-col gap-2">
           <AddToCartButton
-            product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: product.imageUrl ?? undefined }}
+            product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: firstImage ?? undefined }}
           />
           <Link href={`/trade-in/${product.id}`} className="btn-secondary w-full text-sm text-center">
             Подробнее

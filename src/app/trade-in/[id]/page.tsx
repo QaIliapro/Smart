@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
+import UsedProductGallery from '@/components/UsedProductGallery'
 import AddToCartButton from '@/components/AddToCartButton'
 
 export const revalidate = 60
@@ -11,7 +12,10 @@ export default async function UsedProductPage({ params }: { params: { id: string
   if (!product) notFound()
 
   let specs: string[] = []
+  let images: string[] = []
   try { specs = JSON.parse(product.specs) } catch {}
+  try { images = JSON.parse(product.images) } catch {}
+  if (images.length === 0 && product.imageUrl) images = [product.imageUrl]
 
   const conditionColors: Record<string, string> = {
     'Отличное': '#34c759',
@@ -23,15 +27,8 @@ export default async function UsedProductPage({ params }: { params: { id: string
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        {/* Image */}
-        <div className="lg:sticky lg:top-24">
-          {product.imageUrl ? (
-            <img src={product.imageUrl} alt={product.name}
-              className="w-full rounded-3xl object-cover" style={{ aspectRatio: '1/1' }} />
-          ) : (
-            <div className="w-full rounded-3xl" style={{ aspectRatio: '1/1', background: 'var(--color-bg-section)' }} />
-          )}
-        </div>
+        {/* Gallery */}
+        <UsedProductGallery images={images} name={product.name} />
 
         {/* Details */}
         <div className="flex flex-col gap-6">
@@ -63,7 +60,7 @@ export default async function UsedProductPage({ params }: { params: { id: string
           <p style={{ color: 'var(--color-text-secondary)' }} className="leading-relaxed">{product.description}</p>
 
           <AddToCartButton
-            product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: product.imageUrl ?? undefined }}
+            product={{ id: product.id, name: product.name, price: product.price, type: 'used', condition: product.condition, imageUrl: images[0] }}
             fullWidth
           />
         </div>
