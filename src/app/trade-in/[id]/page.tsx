@@ -17,13 +17,6 @@ export default async function UsedProductPage({ params }: { params: { id: string
   try { images = JSON.parse(product.images) } catch {}
   if (images.length === 0 && product.imageUrl) images = [product.imageUrl]
 
-  const conditionColors: Record<string, string> = {
-    'Отличное': '#34c759',
-    'Хорошее': '#ff9f0a',
-    'Удовлетворительное': '#ff6b35',
-  }
-  const conditionColor = conditionColors[product.condition] || '#86868b'
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
@@ -32,12 +25,6 @@ export default async function UsedProductPage({ params }: { params: { id: string
 
         {/* Details */}
         <div className="flex flex-col gap-6">
-          <div>
-            <span className="text-xs font-semibold px-3 py-1 rounded-full"
-              style={{ background: conditionColor + '20', color: conditionColor }}>
-              {product.condition}
-            </span>
-          </div>
           <h1 className="text-2xl sm:text-4xl font-bold" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h1>
           <p className="text-2xl sm:text-3xl font-semibold" style={{ color: 'var(--color-primary)' }}>
             {product.price.toLocaleString('ru-RU')} ₽

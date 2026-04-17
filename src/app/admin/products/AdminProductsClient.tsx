@@ -163,15 +163,6 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
                 style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
               />
             </div>
-            <div>
-              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--text-secondary)' }}>Состояние *</label>
-              <select value={form.condition} onChange={e => setForm({ ...form, condition: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
-              >
-                <option>Отличное</option><option>Хорошее</option><option>Удовлетворительное</option>
-              </select>
-            </div>
 
             {/* Фото */}
             <div className="sm:col-span-2">
@@ -242,10 +233,6 @@ export default function AdminProductsClient({ initialProducts }: { initialProduc
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 mb-1">
                   <h3 className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>{p.name}</h3>
-                  <span className="text-xs px-2 py-0.5 rounded-full text-white font-medium flex-shrink-0"
-                    style={{ background: conditionColors[p.condition] || '#86868b' }}>
-                    {p.condition}
-                  </span>
                   {!p.active && (
                     <span className="text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0"
                       style={{ background: 'var(--bg-secondary)', color: 'var(--text-tertiary)' }}>Скрыт</span>
