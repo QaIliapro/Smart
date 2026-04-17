@@ -12,6 +12,7 @@ interface Product {
   category: string
   tag: string
   specs: string
+  description: string
   gradient: string
   imageUrl?: string | null
   stock: number
@@ -55,11 +56,9 @@ export default function NewPage() {
       ) : (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filtered.map(product => {
-            let specs: string[] = []
-            try { specs = JSON.parse(product.specs) } catch {}
             return (
               <div key={product.id} className="card overflow-hidden flex flex-col">
-                {/* Image Placeholder */}
+                {/* Image */}
                 <div className="relative" style={{ aspectRatio: '1 / 1' }}>
                   {product.imageUrl ? (
                     <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
@@ -72,8 +71,8 @@ export default function NewPage() {
                   <div className="mb-1" style={{ minHeight: '2.5rem' }}>
                     <h3 className="font-semibold text-base leading-tight" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h3>
                   </div>
-                  <p className="text-xs mb-3" style={{ color: 'var(--color-text-secondary)', minHeight: '3rem' }}>
-                    {specs.slice(0, 2).join(' · ')}
+                  <p className="text-sm mb-3 line-clamp-2" style={{ color: 'var(--color-text-secondary)' }}>
+                    {product.description}
                   </p>
                   <p className="text-xl font-bold mb-4" style={{ color: 'var(--color-primary)' }}>
                     {product.price.toLocaleString('ru-RU')} ₽
