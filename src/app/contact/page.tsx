@@ -72,9 +72,7 @@ export default function ContactPage() {
                   background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)',
                   boxShadow: '0 4px 15px rgba(84, 114, 255, 0.4)',
                 }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M12 3C7.03 3 3 6.58 3 11c0 2.45 1.2 4.64 3.1 6.15L5 21l3.8-1.6c.98.38 2.05.6 3.2.6 4.97 0 9-3.58 9-8s-4.03-8-9-8zm-1 12.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" fill="white"/>
-                </svg>
+                <img src="/max-icon.png" alt="MAX" className="w-5 h-5 rounded" />
                 MAX
               </a>
             )}
