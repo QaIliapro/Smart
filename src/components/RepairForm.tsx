@@ -110,10 +110,18 @@ export default function RepairForm({ prefill }: RepairFormProps) {
         <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Телефон *</label>
         <input
           type="tel" required value={formatPhone(phoneDigits)}
+          onKeyDown={e => {
+            if (e.key === 'Backspace') {
+              e.preventDefault()
+              setPhoneDigits(prev => prev.slice(0, -1))
+            }
+          }}
           onChange={e => {
             const raw = e.target.value.replace(/\D/g, '')
             const stripped = raw.startsWith('7') ? raw.slice(1) : raw.startsWith('8') ? raw.slice(1) : raw
-            setPhoneDigits(stripped.slice(0, 10))
+            if (stripped.length > phoneDigits.length) {
+              setPhoneDigits(stripped.slice(0, 10))
+            }
           }}
           placeholder="+7 (999) 000-00-00"
           className="w-full px-4 py-3 rounded-xl text-sm outline-none"
