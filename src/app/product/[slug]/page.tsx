@@ -1,14 +1,13 @@
 import { notFound } from 'next/navigation'
+import { prisma } from '@/lib/prisma'
 import AddToCartButton from '@/components/AddToCartButton'
 import ProductColorPicker from '@/components/ProductColorPicker'
 
 export const revalidate = 60
 
 export default async function ProductPage({ params }: { params: { slug: string } }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3001'}/api/new-products`, { cache: 'no-store' })
-  const products = res.ok ? await res.json() : []
-  const product = products.find((p: { slug: string; active: boolean }) => p.slug === params.slug && p.active)
-  if (!product) notFound()
+  const product = await prisma.newProduct.findUnique({ where: { slug: params.slug } })
+  if (!product || !product.active) notFound()
 
   let specs: string[] = []
   let colors: { name: string; hex: string }[] = []
@@ -33,11 +32,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
 
         {/* Details */}
         <div className="flex flex-col gap-6">
-          <div>
-            <span className="text-sm font-semibold px-3 py-1 rounded-full" style={{ background: 'var(--color-primary)', color: 'white' }}>
-              {product.tag}
-            </span>
-          </div>
           <h1 className="text-2xl sm:text-4xl font-bold" style={{ color: 'var(--color-text-primary)' }}>{product.name}</h1>
           <p className="text-2xl sm:text-3xl font-semibold" style={{ color: 'var(--color-primary)' }}>{product.price.toLocaleString('ru-RU')} ₽</p>
 
@@ -99,7 +93,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
           </div>
         </div>
       </div>
-
     </div>
   )
 }
