@@ -109,8 +109,12 @@ export default function ContactPage() {
                       background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)',
                       boxShadow: '0 4px 15px rgba(84, 114, 255, 0.4)',
                     }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.665 3.717l-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2C6.48 2 2 6.04 2 11c0 2.76 1.36 5.22 3.5 6.84L4 22l4.5-2.12C9.6 20.28 10.77 20.5 12 20.5c5.52 0 10-4.04 10-9S17.52 2 12 2z" fill="white" fillOpacity="0.9"/>
+                      <path d="M12 5.5c-3.58 0-6.5 2.46-6.5 5.5s2.92 5.5 6.5 5.5c.95 0 1.85-.18 2.67-.5l2.83 1-0.8-2.3C18.14 13.44 18.5 12.26 18.5 11c0-3.04-2.92-5.5-6.5-5.5z" fill="url(#maxGrad2)"/>
+                      <defs><linearGradient id="maxGrad2" x1="5.5" y1="5.5" x2="18.5" y2="16.5" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#56CCFA"/><stop offset="0.5" stopColor="#5472FF"/><stop offset="1" stopColor="#9040D0"/>
+                      </linearGradient></defs>
                     </svg>
                     MAX
                   </a>
