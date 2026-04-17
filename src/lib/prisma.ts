@@ -14,7 +14,7 @@ function createPrismaClient() {
     return new PrismaClient({ adapter })
   }
   if (url.startsWith('file:') || url.startsWith('/')) {
-    return new PrismaClient()
+    return new PrismaClient({ datasources: { db: { url } } })
   }
   const authToken = process.env.TURSO_AUTH_TOKEN
   const adapter = new PrismaLibSql({ url, authToken })
