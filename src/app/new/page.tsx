@@ -66,12 +66,6 @@ export default function NewPage() {
                   ) : (
                     <div className={`w-full h-full bg-gradient-to-br ${product.gradient}`} />
                   )}
-                  {product.tag ? (
-                    <span className="absolute top-3 left-3 text-white text-xs font-semibold px-2 py-1 rounded-full"
-                      style={{ background: 'rgba(0,0,0,0.4)' }}>
-                      {product.tag}
-                    </span>
-                  ) : null}
                 </div>
                 {/* Content */}
                 <div className="p-4 flex flex-col flex-1">
