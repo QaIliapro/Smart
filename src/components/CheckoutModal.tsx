@@ -5,7 +5,7 @@ import { useCart } from '@/context/CartContext'
 
 export default function CheckoutModal({ onClose }: { onClose: () => void }) {
   const { items, total, clearCart } = useCart()
-  const [form, setForm] = useState({ name: '', email: '', comment: '' })
+  const [form, setForm] = useState({ name: '', comment: '' })
   const [phoneDigits, setPhoneDigits] = useState('')
 
   const formatPhone = (digits: string) => {
@@ -115,16 +115,8 @@ export default function CheckoutModal({ onClose }: { onClose: () => void }) {
                 style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
               />
             </div>
-            <div>
-              <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Email</label>
-              <input type="email" value={form.email}
-                onChange={e => setForm({ ...form, email: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl text-sm outline-none"
-                style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}
-              />
-            </div>
 
-            <div className="px-4 py-3 rounded-xl text-sm"
+<div className="px-4 py-3 rounded-xl text-sm"
               style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)' }}>
               Способ получения: <span style={{ color: 'var(--color-text-primary)', fontWeight: 600 }}>Самовывоз</span>
             </div>
