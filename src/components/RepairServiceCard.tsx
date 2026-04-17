@@ -135,8 +135,19 @@ export default function RepairServiceCard({ icon, title, prices, free, onSelectR
                 {prices[activeTab].map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center justify-between py-3 px-4 rounded-xl"
-                    style={{ background: 'var(--color-bg-section)' }}
+                    className="flex items-center justify-between py-3 px-4 rounded-xl transition-all duration-150"
+                    style={{
+                      background: 'var(--color-bg-section)',
+                      cursor: onSelectRepair ? 'pointer' : 'default',
+                    }}
+                    onClick={() => {
+                      if (!onSelectRepair) return
+                      const device = categoryToDevice[activeTab] || 'iPhone'
+                      onSelectRepair(device, `${title} — ${item.model}`)
+                      setOpen(false)
+                    }}
+                    onMouseEnter={e => { if (onSelectRepair) e.currentTarget.style.background = 'var(--color-primary-light)' }}
+                    onMouseLeave={e => { if (onSelectRepair) e.currentTarget.style.background = 'var(--color-bg-section)' }}
                   >
                     <span className="text-sm font-medium" style={{ color: 'var(--color-text-primary)' }}>{item.model}</span>
                     <span className="text-base font-bold" style={{ color: item.free ? 'var(--color-success)' : 'var(--color-primary)' }}>
@@ -146,20 +157,8 @@ export default function RepairServiceCard({ icon, title, prices, free, onSelectR
                 ))}
               </div>
               <p className="text-xs mt-4 text-center" style={{ color: 'var(--color-text-muted)' }}>
-                Точная стоимость определяется после диагностики
+                {onSelectRepair ? 'Нажмите на модель, чтобы оставить заявку' : 'Точная стоимость определяется после диагностики'}
               </p>
-              {onSelectRepair && (
-                <button
-                  onClick={() => {
-                    const device = categoryToDevice[activeTab] || 'iPhone'
-                    onSelectRepair(device, title)
-                    setOpen(false)
-                  }}
-                  className="btn-primary w-full py-3 mt-4 text-sm"
-                >
-                  Оставить заявку
-                </button>
-              )}
             </div>
           </div>
         </div>
