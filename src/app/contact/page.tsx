@@ -73,11 +73,7 @@ export default function ContactPage() {
                   boxShadow: '0 4px 15px rgba(84, 114, 255, 0.4)',
                 }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C6.48 2 2 6.04 2 11c0 2.76 1.36 5.22 3.5 6.84L4 22l4.5-2.12C9.6 20.28 10.77 20.5 12 20.5c5.52 0 10-4.04 10-9S17.52 2 12 2z" fill="white" fillOpacity="0.9"/>
-                  <path d="M12 5.5c-3.58 0-6.5 2.46-6.5 5.5s2.92 5.5 6.5 5.5c.95 0 1.85-.18 2.67-.5l2.83 1-0.8-2.3C18.14 13.44 18.5 12.26 18.5 11c0-3.04-2.92-5.5-6.5-5.5z" fill="url(#maxGradContact)"/>
-                  <defs><linearGradient id="maxGradContact" x1="5.5" y1="5.5" x2="18.5" y2="16.5" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#56CCFA"/><stop offset="0.5" stopColor="#5472FF"/><stop offset="1" stopColor="#9040D0"/>
-                  </linearGradient></defs>
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12 3C7.03 3 3 6.58 3 11c0 2.45 1.2 4.64 3.1 6.15L5 21l3.8-1.6c.98.38 2.05.6 3.2.6 4.97 0 9-3.58 9-8s-4.03-8-9-8zm-1 12.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" fill="white"/>
                 </svg>
                 MAX
               </a>
