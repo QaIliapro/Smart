@@ -48,8 +48,7 @@ export default function ServicePageClient() {
   return (
     <section style={{ background: 'var(--color-bg-section)' }} className="py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <h2 className="section-title text-center mb-4">Виды ремонта</h2>
-        <p className="section-subtitle text-center mb-16">Нажмите на вид ремонта, чтобы увидеть цены</p>
+        <h2 className="section-title text-center mb-16">Ремонт</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {mainServices.map(service => (
             <RepairServiceCard
