@@ -1,9 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-export default function RepairForm() {
+interface RepairFormProps {
+  prefill?: { device: string; problem: string } | null
+}
+
+export default function RepairForm({ prefill }: RepairFormProps) {
   const [form, setForm] = useState({ device: 'iPhone', problem: '', name: '' })
+
+  useEffect(() => {
+    if (prefill) {
+      setForm(prev => ({ ...prev, device: prefill.device, problem: prefill.problem }))
+    }
+  }, [prefill])
   const [phoneDigits, setPhoneDigits] = useState('')
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)

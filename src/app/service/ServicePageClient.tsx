@@ -19,7 +19,11 @@ interface RepairService {
   prices: RepairPrice[]
 }
 
-export default function ServicePageClient() {
+interface ServicePageClientProps {
+  onSelectRepair?: (device: string, problem: string) => void
+}
+
+export default function ServicePageClient({ onSelectRepair }: ServicePageClientProps) {
   const [services, setServices] = useState<RepairService[]>([])
 
   useEffect(() => {
@@ -57,6 +61,7 @@ export default function ServicePageClient() {
               title={service.title}
               prices={service.prices}
               free={service.free}
+              onSelectRepair={onSelectRepair}
             />
           ))}
         </div>

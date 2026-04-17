@@ -38,6 +38,7 @@ interface RepairServiceCardProps {
   title: string
   prices?: ServicePrices
   free?: boolean
+  onSelectRepair?: (device: string, problem: string) => void
 }
 
 const categories = [
@@ -47,7 +48,14 @@ const categories = [
   { key: 'android', label: 'Android и другие' },
 ] as const
 
-export default function RepairServiceCard({ icon, title, prices, free }: RepairServiceCardProps) {
+const categoryToDevice: Record<string, string> = {
+  iphone: 'iPhone',
+  ipad: 'iPad',
+  macbook: 'MacBook',
+  android: 'Другое',
+}
+
+export default function RepairServiceCard({ icon, title, prices, free, onSelectRepair }: RepairServiceCardProps) {
   const Icon = iconMap[icon] ?? Smartphone
   const [open, setOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<keyof ServicePrices>('iphone')
@@ -140,6 +148,18 @@ export default function RepairServiceCard({ icon, title, prices, free }: RepairS
               <p className="text-xs mt-4 text-center" style={{ color: 'var(--color-text-muted)' }}>
                 Точная стоимость определяется после диагностики
               </p>
+              {onSelectRepair && (
+                <button
+                  onClick={() => {
+                    const device = categoryToDevice[activeTab] || 'iPhone'
+                    onSelectRepair(device, title)
+                    setOpen(false)
+                  }}
+                  className="btn-primary w-full py-3 mt-4 text-sm"
+                >
+                  Оставить заявку
+                </button>
+              )}
             </div>
           </div>
         </div>
