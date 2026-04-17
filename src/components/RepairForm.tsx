@@ -29,8 +29,6 @@ export default function RepairForm({ prefill }: RepairFormProps) {
     return f
   }
 
-  const vk = process.env.NEXT_PUBLIC_VK_URL
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -55,17 +53,9 @@ export default function RepairForm({ prefill }: RepairFormProps) {
       <div className="card p-10 text-center">
         <div className="text-5xl mb-6">✅</div>
         <h3 className="text-xl font-bold mb-3" style={{ color: 'var(--color-text-primary)' }}>Заявка принята!</h3>
-        <p className="mb-8" style={{ color: 'var(--color-text-secondary)' }}>
-          Мы свяжемся с вами в ближайшее время. Вы также можете написать нам напрямую:
+        <p style={{ color: 'var(--color-text-secondary)' }}>
+          Мы свяжемся с вами в ближайшее время.
         </p>
-        {vk && (
-          <a href={vk} target="_blank" rel="noopener noreferrer"
-            className="inline-block px-8 py-4 rounded-lg text-white font-semibold transition-all hover:scale-105"
-            style={{ background: 'linear-gradient(135deg, #0077FF, #0057CC)', boxShadow: '0 4px 15px rgba(0,119,255,0.3)' }}
-          >
-            Написать во ВКонтакте
-          </a>
-        )}
       </div>
     )
   }
