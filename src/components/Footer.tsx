@@ -81,8 +81,8 @@ export default function Footer() {
           <p className="text-sm" style={{ color: 'var(--color-footer-text)' }}>
             © {new Date().getFullYear()} :smart. Все права защищены.
           </p>
-          <Link href="/admin" className="text-sm transition-opacity opacity-20 hover:opacity-50 px-3 py-1" style={{ color: 'var(--color-footer-text)' }}>
-            ···
+          <Link href="/admin" className="transition-opacity opacity-20 hover:opacity-50 px-3 py-1" style={{ color: 'var(--color-footer-text)' }}>
+            ★
           </Link>
         </div>
       </div>
