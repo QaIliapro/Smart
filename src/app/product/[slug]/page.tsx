@@ -14,8 +14,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
   try { specs = JSON.parse(product.specs) } catch {}
   try { colors = JSON.parse(product.colors) } catch {}
 
-  const vk = process.env.NEXT_PUBLIC_VK_URL
-  const max = process.env.NEXT_PUBLIC_MAX_URL
   const outOfStock = product.stock === 0
 
   return (
@@ -72,24 +70,6 @@ export default async function ProductPage({ params }: { params: { slug: string }
             ) : (
               <AddToCartButton product={{ id: product.id, name: product.name, price: product.price, type: 'new', imageUrl: product.imageUrl ?? undefined }} fullWidth />
             )}
-            <div className="grid grid-cols-2 gap-3">
-              {vk && (
-                <a href={vk} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-medium text-white transition-all hover:scale-105"
-                  style={{ background: 'linear-gradient(135deg, #0077FF, #0057CC)', boxShadow: '0 4px 15px rgba(0,119,255,0.3)' }}
-                >
-                  <span>ВКонтакте</span>
-                </a>
-              )}
-              {max && (
-                <a href={max} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-medium text-white transition-all hover:scale-105"
-                  style={{ background: 'linear-gradient(135deg, #56CCFA, #5472FF, #9040D0)', boxShadow: '0 4px 15px rgba(84,114,255,0.3)' }}
-                >
-                  <span>MAX</span>
-                </a>
-              )}
-            </div>
           </div>
         </div>
       </div>
