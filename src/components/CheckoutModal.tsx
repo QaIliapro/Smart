@@ -5,23 +5,17 @@ import { useCart } from '@/context/CartContext'
 
 export default function CheckoutModal({ onClose }: { onClose: () => void }) {
   const { items, total, clearCart } = useCart()
-  const [form, setForm] = useState({ name: '', phone: '', email: '', comment: '' })
+  const [form, setForm] = useState({ name: '', email: '', comment: '' })
+  const [phoneDigits, setPhoneDigits] = useState('')
 
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const digits = e.target.value.replace(/\D/g, '').slice(0, 11)
-    let formatted = ''
-    if (digits.length === 0) {
-      formatted = ''
-    } else {
-      const d = digits.startsWith('8') || digits.startsWith('7') ? digits.slice(1) : digits
-      const trimmed = d.slice(0, 10)
-      formatted = '+7'
-      if (trimmed.length > 0) formatted += ' (' + trimmed.slice(0, 3)
-      if (trimmed.length >= 3) formatted += ') ' + trimmed.slice(3, 6)
-      if (trimmed.length >= 6) formatted += '-' + trimmed.slice(6, 8)
-      if (trimmed.length >= 8) formatted += '-' + trimmed.slice(8, 10)
-    }
-    setForm({ ...form, phone: formatted })
+  const formatPhone = (digits: string) => {
+    if (!digits) return ''
+    let f = '+7'
+    if (digits.length > 0) f += ' (' + digits.slice(0, 3)
+    if (digits.length >= 3) f += ') ' + digits.slice(3, 6)
+    if (digits.length >= 6) f += '-' + digits.slice(6, 8)
+    if (digits.length >= 8) f += '-' + digits.slice(8, 10)
+    return f
   }
   const [loading, setLoading] = useState(false)
   const [orderId, setOrderId] = useState<string | null>(null)
@@ -38,7 +32,7 @@ export default function CheckoutModal({ onClose }: { onClose: () => void }) {
       const res = await fetch('/api/orders', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, method: 'pickup', items: JSON.stringify(items), total }),
+        body: JSON.stringify({ ...form, phone: formatPhone(phoneDigits), method: 'pickup', items: JSON.stringify(items), total }),
       })
       if (!res.ok) throw new Error('Ошибка')
       const data = await res.json()
@@ -102,8 +96,12 @@ export default function CheckoutModal({ onClose }: { onClose: () => void }) {
             </div>
             <div>
               <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Телефон *</label>
-              <input type="tel" required value={form.phone}
-                onChange={handlePhoneChange}
+              <input type="tel" required value={formatPhone(phoneDigits)}
+                onChange={e => {
+                  const raw = e.target.value.replace(/\D/g, '')
+                  const stripped = raw.startsWith('7') ? raw.slice(1) : raw.startsWith('8') ? raw.slice(1) : raw
+                  setPhoneDigits(stripped.slice(0, 10))
+                }}
                 placeholder="+7 (___) ___-__-__"
                 className="w-full px-4 py-3 rounded-xl text-sm outline-none"
                 style={{ background: 'var(--color-bg-section)', border: '1px solid var(--color-border)', color: 'var(--color-text-primary)' }}

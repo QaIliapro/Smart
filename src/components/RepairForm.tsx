@@ -3,10 +3,21 @@
 import { useState } from 'react'
 
 export default function RepairForm() {
-  const [form, setForm] = useState({ device: 'iPhone', problem: '', name: '', phone: '' })
+  const [form, setForm] = useState({ device: 'iPhone', problem: '', name: '' })
+  const [phoneDigits, setPhoneDigits] = useState('')
   const [loading, setLoading] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
+
+  const formatPhone = (digits: string) => {
+    if (!digits) return ''
+    let f = '+7'
+    if (digits.length > 0) f += ' (' + digits.slice(0, 3)
+    if (digits.length >= 3) f += ') ' + digits.slice(3, 6)
+    if (digits.length >= 6) f += '-' + digits.slice(6, 8)
+    if (digits.length >= 8) f += '-' + digits.slice(8, 10)
+    return f
+  }
 
   const vk = process.env.NEXT_PUBLIC_VK_URL
 
@@ -18,7 +29,7 @@ export default function RepairForm() {
       const res = await fetch('/api/repairs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, phone: formatPhone(phoneDigits) }),
       })
       if (!res.ok) throw new Error('Ошибка')
       setSubmitted(true)
@@ -88,16 +99,11 @@ export default function RepairForm() {
       <div>
         <label className="text-sm font-medium block mb-1.5" style={{ color: 'var(--color-text-secondary)' }}>Телефон *</label>
         <input
-          type="tel" required value={form.phone}
+          type="tel" required value={formatPhone(phoneDigits)}
           onChange={e => {
-            const digits = e.target.value.replace(/\D/g, '').slice(0, 11)
-            let formatted = ''
-            if (digits.length > 0) formatted = '+7'
-            if (digits.length > 1) formatted += ' (' + digits.slice(1, 4)
-            if (digits.length >= 4) formatted += ') ' + digits.slice(4, 7)
-            if (digits.length >= 7) formatted += '-' + digits.slice(7, 9)
-            if (digits.length >= 9) formatted += '-' + digits.slice(9, 11)
-            setForm({ ...form, phone: formatted })
+            const raw = e.target.value.replace(/\D/g, '')
+            const stripped = raw.startsWith('7') ? raw.slice(1) : raw.startsWith('8') ? raw.slice(1) : raw
+            setPhoneDigits(stripped.slice(0, 10))
           }}
           placeholder="+7 (999) 000-00-00"
           className="w-full px-4 py-3 rounded-xl text-sm outline-none"

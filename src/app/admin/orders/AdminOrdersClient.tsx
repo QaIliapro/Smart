@@ -43,6 +43,12 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: Or
     setOrders(orders.map(o => o.id === id ? { ...o, status } : o))
   }
 
+  const deleteOrder = async (id: string) => {
+    if (!confirm('Удалить заказ?')) return
+    await fetch(`/api/admin/orders/${id}`, { method: 'DELETE' })
+    setOrders(orders.filter(o => o.id !== id))
+  }
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
       <div className="flex items-center gap-4 mb-8">
@@ -100,6 +106,12 @@ export default function AdminOrdersClient({ initialOrders }: { initialOrders: Or
                         {label}
                       </button>
                     ))}
+                    <button onClick={() => deleteOrder(order.id)}
+                      className="text-sm px-4 py-2 rounded-full font-medium transition-all ml-auto"
+                      style={{ background: '#ff3b3020', color: '#ff3b30' }}
+                    >
+                      Удалить
+                    </button>
                   </div>
                 </div>
               </div>
